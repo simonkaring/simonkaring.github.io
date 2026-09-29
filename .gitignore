@@ -1,0 +1,12 @@
+# Jekyll build output and caches
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+
+# Node dependencies and generated test reports
+node_modules/
+test-results/
+playwright-report/
+playwright/.cache/
