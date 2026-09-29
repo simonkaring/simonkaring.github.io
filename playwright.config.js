@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// CI runners have no GPU: give Chromium its software WebGL renderer so the network can render.
+const chromiumArgs = process.env.CI ? { launchOptions: { args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } } : {};
+
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -13,8 +16,8 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
   },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 1000 }, colorScheme: 'dark' } },
-    { name: 'mobile', use: { ...devices['iPhone 13'], defaultBrowserType: 'chromium', colorScheme: 'light' } },
+    { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 1000 }, colorScheme: 'dark', ...chromiumArgs } },
+    { name: 'mobile', use: { ...devices['iPhone 13'], defaultBrowserType: 'chromium', colorScheme: 'light', ...chromiumArgs } },
     { name: 'webkit', use: { ...devices['Desktop Safari'], colorScheme: 'dark' } },
   ],
 });
