@@ -26,6 +26,9 @@ test('content, responsive layout and local routes', async ({ page, request }, te
 
 test('network renders visible geometry and reacts to scroll', async ({ page }) => {
   await page.goto('/');
+  // Some headless environments have no WebGL at all; the fallback has its own test below.
+  const webgl = await page.evaluate(() => !!document.createElement('canvas').getContext('webgl2'));
+  test.skip(!webgl, 'WebGL is unavailable in this browser environment');
   await expect(rendering(page)).toHaveAttribute('data-rendering', 'webgl', { timeout: 15000 });
   await page.waitForTimeout(2800);
   const coverage = () => page.locator('[data-network]').evaluate(async canvas => {
