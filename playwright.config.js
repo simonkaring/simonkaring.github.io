@@ -5,10 +5,11 @@ export default defineConfig({
   fullyParallel: true,
   workers: 2,
   timeout: 60000,
-  use: { baseURL: 'http://127.0.0.1:4173', trace: 'retain-on-failure' },
+  use: { baseURL: 'http://127.0.0.1:4321', trace: 'retain-on-failure' },
+  // Tests run against the production build (`npm run build` first).
   webServer: {
-    command: 'python3 -m http.server 4173 --bind 127.0.0.1 --directory _site',
-    url: 'http://127.0.0.1:4173',
+    command: 'npm run preview',
+    url: 'http://127.0.0.1:4321',
     reuseExistingServer: !process.env.CI,
   },
   projects: [

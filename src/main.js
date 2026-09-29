@@ -1,82 +1,76 @@
+import '@fontsource-variable/geist/wght.css';
+import '@fontsource-variable/geist-mono/wght.css';
+import './styles.css';
+
 const root = document.documentElement;
-const systemTheme = matchMedia('(prefers-color-scheme: light)');
+const systemLight = matchMedia('(prefers-color-scheme: light)');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+// Theme ------------------------------------------------------------------
 const themeButton = document.querySelector('.theme-toggle');
-const currentTheme = () => root.dataset.theme || (systemTheme.matches ? 'light' : 'dark');
+const currentTheme = () => root.dataset.theme || (systemLight.matches ? 'light' : 'dark');
 function syncTheme() {
-  const next = currentTheme() === 'dark' ? 'light' : 'dark';
+  const theme = currentTheme();
+  const next = theme === 'dark' ? 'light' : 'dark';
   themeButton.querySelector('[data-theme-label]').textContent = next === 'light' ? 'Light' : 'Dark';
   themeButton.setAttribute('aria-label', `Switch to ${next} theme`);
-  document.querySelector('meta[name="theme-color"]').content = currentTheme() === 'dark' ? '#151614' : '#eeeee6';
-  window.dispatchEvent(new CustomEvent('themechange', { detail: currentTheme() }));
+  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#0c0d0f' : '#ebe9e3';
+  window.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
 }
 if (themeButton) {
   themeButton.hidden = false;
   syncTheme();
   themeButton.addEventListener('click', () => {
     root.dataset.theme = currentTheme() === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('sk-theme', root.dataset.theme); } catch (_) { /* Private browsing may disable storage. */ }
+    try { localStorage.setItem('sk-theme', root.dataset.theme); } catch (_) { /* storage may be unavailable */ }
     syncTheme();
   });
-  systemTheme.addEventListener('change', syncTheme);
+  systemLight.addEventListener('change', syncTheme);
 }
 
+// Scroll reveals -----------------------------------------------------------
+document.querySelectorAll('.lifecycle li').forEach((item, i) => item.style.setProperty('--i', i));
+const reveals = document.querySelectorAll('.reveal');
 if ('IntersectionObserver' in window && !reducedMotion.matches) {
-  const reveal = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('reveal-pending');
-        entry.target.classList.add('reveal-visible');
-        reveal.unobserve(entry.target);
-      }
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
     }
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.about-main, .practice-heading, .practice-card, .approach h2, .contact').forEach(element => {
-    // Keep already-visible content available when restoring a scroll position.
-    if (element.getBoundingClientRect().top > innerHeight) {
-      element.classList.add('reveal-pending');
-      reveal.observe(element);
-    }
-  });
-  reducedMotion.addEventListener('change', event => {
-    if (event.matches) {
-      reveal.disconnect();
-      document.querySelectorAll('.reveal-pending').forEach(element => element.classList.remove('reveal-pending'));
-    }
-  });
+  }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+  reveals.forEach(element => observer.observe(element));
+} else {
+  reveals.forEach(element => element.classList.add('is-visible'));
 }
 
-const sculpture = document.querySelector('[data-sculpture]');
-if (sculpture) {
-  // The static artwork is visible immediately; WebGL is a progressive enhancement.
-  const activate = sculpture.querySelector('.sculpture-activate');
-  const status = sculpture.querySelector('[data-sculpture-status]');
-  let started = false;
-  const start = async (userInitiated = false) => {
-    if (started) return;
-    started = true;
-    activate.disabled = true;
-    activate.textContent = 'Loading 3D…';
-    if (userInitiated) status.textContent = 'Loading interactive sculpture.';
+// Work index: each row is a cluster in the network. ---------------------------
+const focusProject = index => window.dispatchEvent(new CustomEvent('projectfocus', { detail: index }));
+document.querySelectorAll('.work-row').forEach(row => {
+  const index = Number(row.dataset.cluster);
+  row.addEventListener('pointerenter', () => focusProject(index));
+  row.addEventListener('focus', () => focusProject(index));
+  row.addEventListener('pointerleave', () => focusProject(null));
+  row.addEventListener('blur', () => focusProject(null));
+  // Shared-element transition: the clicked name becomes the case study title.
+  row.addEventListener('click', () => { row.querySelector('.work-name').style.viewTransitionName = 'case-title'; });
+});
+// Restored from the back/forward cache: clear the shared name so it stays unique.
+addEventListener('pageshow', () => document.querySelectorAll('.work-name').forEach(name => { name.style.viewTransitionName = ''; }));
+
+// Signature network: progressive enhancement over the real <h1>. --------------
+const canvas = document.querySelector('[data-network]');
+if (canvas) {
+  const start = async () => {
     try {
-      const module = await import('./sculpture.js');
-      module.initSculpture(sculpture);
-    } catch (_) {
-      sculpture.dataset.rendering = 'static';
-    }
-    activate.hidden = true;
-    if (userInitiated) {
-      status.textContent = sculpture.dataset.rendering === 'webgl' ? 'Interactive sculpture ready. Choose assembled or exploded view.' : '3D is unavailable on this device. The sculpture is shown as a still image.';
-      const nextFocus = sculpture.dataset.rendering === 'webgl' ? sculpture.querySelector('[data-view="assembled"]') : status;
-      if (nextFocus === status) nextFocus.tabIndex = -1;
-      nextFocus.focus({ preventScroll: true });
+      const { initNetwork } = await import('./network.js');
+      await initNetwork({ canvas, name: document.querySelector('[data-name]'), reducedMotion });
+    } catch (error) {
+      root.dataset.rendering = 'static';
+      if (import.meta.env.DEV) console.warn(error);
     }
   };
-  // Save mobile bandwidth, battery, and shader-compilation cost until requested.
-  if (matchMedia('(pointer: coarse)').matches || innerWidth < 768 || navigator.connection?.saveData) {
-    sculpture.dataset.rendering = 'poster';
-    activate.hidden = false;
-    activate.addEventListener('click', () => start(true));
-  } else if ('requestIdleCallback' in window) requestIdleCallback(() => start(), { timeout: 1500 });
-  else setTimeout(() => start(), 100);
+  if (navigator.connection?.saveData) root.dataset.rendering = 'static';
+  else if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 600 });
+  else setTimeout(start, 60);
 }
