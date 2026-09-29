@@ -20,12 +20,15 @@ const FOV = 32;
 const CLUSTERS = 9;
 
 const COMMON = /* glsl */ `
-  uniform float uTime, uIntro, uMorph, uScroll, uViewH, uPointerAmt, uRadius, uOpacity, uGraphDim, uLetterVis, uSystemVis;
+  uniform float uTime, uIntro, uMorph, uScroll, uViewH, uPointerAmt, uRadius, uOpacity, uGraphDim, uLetterVis, uSystemVis, uActive, uActiveAmt;
   uniform vec2 uPointer, uTilt;
   uniform vec3 uGraphCenter;
   attribute vec3 aText;
   attribute vec3 aGraph;
   attribute vec4 aSeed; // x: stagger, y: size jitter, z: 0 node / 1 accent / 2 hub, w: arc
+  attribute float aCluster; // project cluster index, -1 for ambient dust
+  // 1 when this vertex belongs to the project currently focused in the work index.
+  float focusOn(float t) { return (1. - step(.5, abs(aCluster - uActive))) * uActiveAmt * (1. - t); }
   mat3 rotY(float a) { float c = cos(a), s = sin(a); return mat3(c, 0., -s, 0., 1., 0., s, 0., c); }
   mat3 rotX(float a) { float c = cos(a), s = sin(a); return mat3(1., 0., 0., 0., c, s, 0., -s, c); }
   float easeInOut(float x) { return x < .5 ? 4. * x * x * x : 1. - pow(-2. * x + 2., 3.) / 2.; }
@@ -66,12 +69,14 @@ const pointsMaterial = uniforms => new ShaderMaterial({
       vec3 p = place(t);
       vec4 mv = modelViewMatrix * vec4(p, 1.);
       float hub = step(1.5, aSeed.z);
-      float size = mix(1.5 + aSeed.y * .9 + hub * 5.5, 1.25 + aSeed.y * 1.1, t);
+      float on = focusOn(t);
+      float size = mix(1.5 + aSeed.y * .9 + hub * 5.5, 1.25 + aSeed.y * 1.1, t) * (1. + on * .35);
       gl_PointSize = size * uPR * (uCamZ / -mv.z);
       gl_Position = projectionMatrix * mv;
       float depth = clamp((-mv.z - uCamZ + 450.) / 900., 0., 1.);
-      vAlpha = mix(mix(.9, .28, depth) * uGraphDim, 1., t) * uOpacity;
-      vAccent = step(.5, aSeed.z);
+      float dim = mix(1., mix(.45, 1.35, on), uActiveAmt * (1. - t));
+      vAlpha = mix(clamp(mix(.9, .28, depth) * uGraphDim * dim, 0., 1.), 1., t) * uOpacity;
+      vAccent = max(step(.5, aSeed.z), on * step(.55, aSeed.y));
     }
   `,
   fragmentShader: /* glsl */ `
@@ -102,9 +107,11 @@ const linesMaterial = uniforms => new ShaderMaterial({
       gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.);
       // Visibility is gated globally so edges never stretch across the screen mid-flight.
       float letter = (1. - step(.5, aKind)) * t * .2 * uLetterVis;
+      float on = focusOn(t);
       float system = step(.5, aKind) * (1. - t) * mix(.16, .5, step(1.5, aKind)) * uSystemVis * uGraphDim;
-      vAlpha = (letter + system) * uOpacity;
-      vAccent = step(1.5, aKind);
+      system *= mix(1., mix(.4, 2.4, on), uActiveAmt);
+      vAlpha = min(letter + system, .75) * uOpacity;
+      vAccent = max(step(1.5, aKind), on);
     }
   `,
   fragmentShader: /* glsl */ `
@@ -181,14 +188,14 @@ function sampleName(name, count, random) {
 /** Clustered 3D system layout: nine subsystems around a loose core, plus ambient dust. */
 function layoutGraph(count, random, { width, height, mobile }) {
   const radius = Math.min(width, height) * (mobile ? 0.44 : 0.4);
-  const center = [mobile ? 0 : width * 0.17, mobile ? -height * 0.05 : 0, 0];
+  const center = [mobile ? 0 : width * 0.14, mobile ? -height * 0.05 : 0, 0];
   const centers = [];
   for (let k = 0; k < CLUSTERS; k += 1) {
     const y = 1 - (k + 0.5) / CLUSTERS * 2;
     const r = Math.sqrt(1 - y * y);
     const phi = k * Math.PI * (3 - Math.sqrt(5));
     centers.push([
-      center[0] + Math.cos(phi) * r * radius * 1.25,
+      center[0] + Math.cos(phi) * r * radius * 1.05,
       center[1] + y * radius * 0.85,
       center[2] + Math.sin(phi) * r * radius * 0.95,
     ]);
@@ -295,7 +302,7 @@ export async function initNetwork({ canvas, name, reducedMotion }) {
     uTime: { value: 0 }, uIntro: { value: 0 }, uMorph: { value: 0 }, uScroll: { value: scrollY },
     uViewH: { value: innerHeight }, uPointer: { value: [99999, 99999] }, uPointerAmt: { value: 0 },
     uRadius: { value: mobile ? 80 : 150 }, uTilt: { value: [0, 0] }, uGraphCenter: { value: [0, 0, 0] },
-    uOpacity: { value: 1 }, uGraphDim: { value: mobile ? 0.5 : 0.8 }, uLetterVis: { value: 0 }, uSystemVis: { value: 1 }, uCamZ: { value: 1 }, uPR: { value: 1 },
+    uOpacity: { value: 1 }, uGraphDim: { value: mobile ? 0.5 : 0.8 }, uLetterVis: { value: 0 }, uSystemVis: { value: 1 }, uActive: { value: -10 }, uActiveAmt: { value: 0 }, uCamZ: { value: 1 }, uPR: { value: 1 },
     uInk: { value: new Color() }, uAccent: { value: new Color() },
   };
   const points = new Points(new BufferGeometry(), pointsMaterial(uniforms));
@@ -327,16 +334,18 @@ export async function initNetwork({ canvas, name, reducedMotion }) {
     pg.setAttribute('aText', new BufferAttribute(text.positions, 3));
     pg.setAttribute('aGraph', new BufferAttribute(graph.positions, 3));
     pg.setAttribute('aSeed', new BufferAttribute(graph.seeds, 4));
+    pg.setAttribute('aCluster', new BufferAttribute(Float32Array.from(graph.cluster), 1));
 
     const n = edges.length;
     const lText = new Float32Array(n * 3); const lGraph = new Float32Array(n * 3);
-    const lSeed = new Float32Array(n * 4); const lKind = new Float32Array(n);
+    const lSeed = new Float32Array(n * 4); const lKind = new Float32Array(n); const lCluster = new Float32Array(n);
     for (let v = 0; v < n; v += 1) {
       const i = edges[v];
       lText.set(text.positions.subarray(i * 3, i * 3 + 3), v * 3);
       lGraph.set(graph.positions.subarray(i * 3, i * 3 + 3), v * 3);
       lSeed.set(graph.seeds.subarray(i * 4, i * 4 + 4), v * 4);
       lKind[v] = kinds[v >> 1];
+      lCluster[v] = graph.cluster[i];
     }
     const lg = lines.geometry;
     lg.setAttribute('position', new BufferAttribute(new Float32Array(n * 3), 3));
@@ -344,6 +353,7 @@ export async function initNetwork({ canvas, name, reducedMotion }) {
     lg.setAttribute('aGraph', new BufferAttribute(lGraph, 3));
     lg.setAttribute('aSeed', new BufferAttribute(lSeed, 4));
     lg.setAttribute('aKind', new BufferAttribute(lKind, 1));
+    lg.setAttribute('aCluster', new BufferAttribute(lCluster, 1));
     uniforms.uGraphCenter.value = graph.center;
   };
 
@@ -384,6 +394,13 @@ export async function initNetwork({ canvas, name, reducedMotion }) {
   let resizeTimer;
   addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => resize(), 150); });
   addEventListener('themechange', readColors);
+  // Work index rows focus their cluster.
+  const focus = { index: -10, amt: 0, target: 0 };
+  addEventListener('projectfocus', event => {
+    if (event.detail === null) focus.target = 0;
+    else { focus.index = event.detail; focus.target = 1; }
+    dirty = true;
+  });
   reducedMotion.addEventListener('change', () => { dirty = true; });
 
   resize(true);
@@ -418,6 +435,8 @@ export async function initNetwork({ canvas, name, reducedMotion }) {
     pointer.tiltX += ((reduce ? 0 : tx) - pointer.tiltX) * easing * 0.35;
     pointer.tiltY += ((reduce ? 0 : ty) - pointer.tiltY) * easing * 0.35;
 
+    focus.amt = reduce ? focus.target : focus.amt + (focus.target - focus.amt) * (1 - Math.exp(-dt * 8));
+
     const changed = dirty || !reduce || y !== uniforms.uScroll.value;
     if (!changed || (opacity <= 0 && uniforms.uOpacity.value <= 0)) return;
     dirty = false;
@@ -432,6 +451,8 @@ export async function initNetwork({ canvas, name, reducedMotion }) {
     uniforms.uPointer.value = [pointer.x, pointer.y];
     uniforms.uPointerAmt.value = pointer.amt;
     uniforms.uTilt.value = [pointer.tiltX, pointer.tiltY];
+    uniforms.uActive.value = focus.index;
+    uniforms.uActiveAmt.value = focus.amt;
     renderer.render(scene, camera);
     if (root.dataset.rendering !== 'webgl') root.dataset.rendering = 'webgl';
   };

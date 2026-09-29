@@ -44,6 +44,20 @@ if ('IntersectionObserver' in window && !reducedMotion.matches) {
   reveals.forEach(element => element.classList.add('is-visible'));
 }
 
+// Work index: each row is a cluster in the network. ---------------------------
+const focusProject = index => window.dispatchEvent(new CustomEvent('projectfocus', { detail: index }));
+document.querySelectorAll('.work-row').forEach(row => {
+  const index = Number(row.dataset.cluster);
+  row.addEventListener('pointerenter', () => focusProject(index));
+  row.addEventListener('focus', () => focusProject(index));
+  row.addEventListener('pointerleave', () => focusProject(null));
+  row.addEventListener('blur', () => focusProject(null));
+  // Shared-element transition: the clicked name becomes the case study title.
+  row.addEventListener('click', () => { row.querySelector('.work-name').style.viewTransitionName = 'case-title'; });
+});
+// Restored from the back/forward cache: clear the shared name so it stays unique.
+addEventListener('pageshow', () => document.querySelectorAll('.work-name').forEach(name => { name.style.viewTransitionName = ''; }));
+
 // Signature network: progressive enhancement over the real <h1>. --------------
 const canvas = document.querySelector('[data-network]');
 if (canvas) {

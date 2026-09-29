@@ -3,7 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "generate": "node scripts/generate-work.mjs",
+    "predev": "npm run generate",
     "dev": "vite",
+    "prebuild": "npm run generate",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4321 --strictPort",
     "test": "playwright test",

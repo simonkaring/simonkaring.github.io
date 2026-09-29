@@ -100,3 +100,29 @@ test('WebGL failure keeps the typographic name', async ({ page }) => {
   await expect(rendering(page)).toHaveAttribute('data-rendering', 'static', { timeout: 15000 });
   await expect(page.getByRole('heading', { level: 1 })).not.toHaveCSS('color', 'rgba(0, 0, 0, 0)');
 });
+
+test('case study pages render, fit and are accessible', async ({ page }) => {
+  await page.goto('/');
+  const links = await page.locator('.work-row').evaluateAll(rows => rows.map(row => [row.getAttribute('href'), row.dataset.cluster]));
+  expect(links.length).toBe(9);
+  expect(new Set(links.map(([, cluster]) => cluster)).size, 'each project maps to its own cluster').toBe(9);
+  for (const [href] of links) {
+    await page.goto(href);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Next project/ })).toBeVisible();
+    for (const img of await page.locator('main img').all()) expect(await img.getAttribute('alt'), `${href} image alt`).toBeTruthy();
+    await page.setViewportSize({ width: 320, height: 800 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${href} overflow at 320px`).toBe(true);
+    await page.setViewportSize({ width: 1280, height: 900 });
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const slug of ['servicehub', 'voltlink']) {
+    await page.goto(`/work/${slug}/`);
+    for (const theme of ['dark', 'light']) {
+      await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
+      await page.waitForTimeout(100);
+      const report = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+      expect(report.violations, `${slug} ${theme}`).toEqual([]);
+    }
+  }
+});
