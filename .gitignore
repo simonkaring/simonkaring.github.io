@@ -1,4 +1,7 @@
-# Jekyll build output and caches
+# Build output (deployed by GitHub Actions, never committed)
+dist/
+
+# Legacy Jekyll output and caches
 _site/
 .sass-cache/
 .jekyll-cache/
