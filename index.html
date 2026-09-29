@@ -1,0 +1,74 @@
+---
+layout: default
+---
+<main id="main">
+  <section class="hero page-width" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="small-rule" aria-hidden="true"></span>A personal introduction</p>
+      <h1 id="hero-title">Simon<br>Karing<span class="name-period">.</span></h1>
+      <div class="hero-bottom">
+        <p class="hero-description">I design systems and build software.<br>For enterprises. For everyday life.</p>
+        <a class="round-link" href="#about" aria-label="More about Simon"><span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <div class="sculpture" data-sculpture>
+      <div class="sculpture-stage">
+        <img class="sculpture-poster" src="{{ '/assets/sculpture.webp' | relative_url }}" width="1344" height="1302" fetchpriority="high" alt="An architectural sculpture of interlocking silver and electric-blue frames.">
+        <canvas class="sculpture-canvas" aria-hidden="true"></canvas>
+      </div>
+      <div class="sculpture-caption">
+        <span class="object-caption">Individual parts.<br>One connected system.</span>
+        <button class="sculpture-activate" type="button" hidden>Explore in 3D <span aria-hidden="true">↗</span></button>
+        <span class="sr-only" role="status" data-sculpture-status></span>
+        <div class="sculpture-controls" role="group" aria-label="Sculpture view" hidden>
+          <button type="button" data-view="assembled" aria-pressed="true">Assembled</button>
+          <button type="button" data-view="exploded" aria-pressed="false">Exploded <span aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-footnote"><span>System design & architecture</span><span>Built around the bigger picture</span></div>
+  </section>
+
+  <section id="about" class="about page-width" aria-labelledby="about-title">
+    <div class="section-label"><span class="small-rule" aria-hidden="true"></span>Behind the systems</div>
+    <div class="about-main">
+      <h2 id="about-title">The whole is only as good as <span class="muted">the way it connects.</span></h2>
+      <div class="about-copy">
+        <p>I’m Simon. My work centers on system design and architecture, building enterprise software, and making tools that improve my own workflows.</p>
+        <p>I’m interested in both scales: how a system fits together, and how it feels to use every day.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="practice" class="practice page-width" aria-labelledby="practice-title">
+    <div class="practice-heading"><h2 id="practice-title">Different scales.<br><span class="muted">The same curiosity.</span></h2><p>From the structure underneath<br>to the details you interact with.</p></div>
+    <div class="practice-grid">
+      <article class="practice-card architecture-card">
+        <div class="architecture-art" aria-hidden="true">
+          <div class="diagram-plane plane-back"></div><div class="diagram-plane plane-middle"></div><div class="diagram-plane plane-front"></div><div class="diagram-axis"></div>
+        </div>
+        <div class="card-copy"><h3>System design<br>& architecture</h3><p>Thinking through the parts, the boundaries, and the connections that make software work as a whole.</p></div>
+        <span class="card-index" aria-hidden="true">↗</span>
+      </article>
+      <article class="practice-card enterprise-card">
+        <div class="enterprise-art" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="card-copy"><h3>Enterprise<br>software</h3><p>Building within the complexity of larger systems, where individual decisions become part of a bigger picture.</p></div>
+      </article>
+      <article class="practice-card personal-card">
+        <div class="personal-art" aria-hidden="true"><div class="path-line"></div><span class="path-start"></span><span class="path-end">↗</span></div>
+        <div class="card-copy"><h3>Personal tools.<br>Real usefulness.</h3><p>Hobby projects that start with a familiar question: could this everyday workflow be a little better?</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="approach page-width" aria-labelledby="approach-title">
+    <div class="approach-top"><span class="section-label"><span class="small-rule" aria-hidden="true"></span>A common thread</span><span class="approach-symbol" aria-hidden="true">↳</span></div>
+    <h2 id="approach-title">Think in systems.<br>Build for <span class="outline-word">people.</span></h2>
+    <p>Architecture gives the work its structure.<br>Everyday usefulness gives it a reason.</p>
+  </section>
+
+  <section class="contact page-width" aria-labelledby="contact-title">
+    <div><p class="contact-intro">A little more of my world</p><h2 id="contact-title">Follow the<br>connections<span class="accent">.</span></h2></div>
+    <a class="github-link" href="https://github.com/simonkaring"><span>Find me on GitHub<small>github.com/simonkaring</small></span><span class="github-arrow" aria-hidden="true">↗</span></a>
+  </section>
+</main>
