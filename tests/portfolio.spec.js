@@ -3,6 +3,18 @@ import AxeBuilder from '@axe-core/playwright';
 
 const rendering = page => page.locator('html');
 
+// Load the page fresh in each colour scheme rather than flipping the theme on a live page:
+// WebKit on slow CI runners can be read mid-restyle, which gives false contrast failures.
+async function expectAccessibleInBothThemes(page, path) {
+  for (const colorScheme of ['dark', 'light']) {
+    await page.emulateMedia({ reducedMotion: 'reduce', colorScheme });
+    await page.goto(path);
+    await page.evaluate(() => document.fonts.ready);
+    const report = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+    expect(report.violations, `${path} ${colorScheme}`).toEqual([]);
+  }
+}
+
 test('content, responsive layout and local routes', async ({ page, request }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -69,14 +81,7 @@ test('theme persistence and keyboard navigation', async ({ page, browserName }) 
 });
 
 test('accessible in both themes with reduced motion', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
-  for (const theme of ['dark', 'light']) {
-    await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
-    await page.waitForTimeout(100);
-    const report = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
-    expect(report.violations, theme).toEqual([]);
-  }
+  await expectAccessibleInBothThemes(page, '/');
   expect(await page.locator('html').evaluate(element => getComputedStyle(element).scrollBehavior)).toBe('auto');
   await expect(page.locator('.reveal').first()).toHaveCSS('opacity', '1');
 });
@@ -118,14 +123,5 @@ test('case study pages render, fit and are accessible', async ({ page }) => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${href} overflow at 320px`).toBe(true);
     await page.setViewportSize({ width: 1280, height: 900 });
   }
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const slug of ['servicehub', 'voltlink']) {
-    await page.goto(`/work/${slug}/`);
-    for (const theme of ['dark', 'light']) {
-      await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
-      await page.waitForTimeout(100);
-      const report = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
-      expect(report.violations, `${slug} ${theme}`).toEqual([]);
-    }
-  }
+  for (const slug of ['servicehub', 'voltlink']) await expectAccessibleInBothThemes(page, `/work/${slug}/`);
 });
