@@ -132,6 +132,7 @@ main, .site-footer { position: relative; z-index: 1; }
 .shot { margin: 0; }
 .shot img { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: color-mix(in srgb, var(--ink) 6%, var(--bg)); }
 .shot--phone img { border-radius: clamp(1.25rem, 3vw, 2.25rem); }
+.shot--portrait { max-width: 24rem; margin-inline: auto; }
 .shot figcaption { margin-top: 0.85rem; font: 500 0.75rem/1.4 var(--mono); color: var(--muted); }
 .case-lead { margin: 0 calc(var(--gutter) * -0.5); }
 .phone-row { display: grid; grid-template-columns: repeat(var(--count), minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2.5rem); max-width: calc(var(--count) * 20rem); align-items: start; }
@@ -153,6 +154,16 @@ main, .site-footer { position: relative; z-index: 1; }
 .shot--right { grid-column: 3 / span 10; }
 .case-highlights + .phone-row { margin: 0 auto clamp(5rem, 14vh, 9rem); }
 .case-stack { padding-bottom: clamp(5rem, 14vh, 9rem); }
+.case-details { display: contents; }
+@media (min-width: 1024px) {
+  .case-details:has(.shot--portrait) { display: grid; grid-template-columns: minmax(0, 1fr) 24rem; column-gap: clamp(3rem, 8vw, 8rem); align-items: start; padding: 2rem 0 clamp(5rem, 14vh, 9rem); }
+  .case-details:has(.shot--portrait) > .case-lead { grid-column: 2; grid-row: 1 / span 3; margin: 0; }
+  .case-details:has(.shot--portrait) > section { grid-column: 1; }
+  .case-details:has(.shot--portrait) .case-story { display: flex; flex-direction: column; padding-top: 0; padding-bottom: 3rem; }
+  .case-details:has(.shot--portrait) .case-highlights { padding-bottom: 3rem; }
+  .case-details:has(.shot--portrait) .hl-list { grid-template-columns: 1fr; }
+  .case-details:has(.shot--portrait) .case-stack { padding-bottom: 0; }
+}
 .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; max-width: 60rem; }
 .tags li { padding: 0.5rem 0.8rem; border: 1px solid var(--line); font: 500 0.8125rem/1 var(--mono); }
 .case-next { border-top: 1px solid var(--line); padding: clamp(4rem, 10vh, 6rem) 0; }

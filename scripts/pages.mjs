@@ -60,7 +60,7 @@ export function renderWorkList() {
   }).join('\n        ');
 }
 
-const figure = (image, className = '', eager = false) => `<figure class="shot ${image.phone ? 'shot--phone' : ''} ${className}">
+const figure = (image, className = '', eager = false) => `<figure class="shot ${image.phone ? 'shot--phone' : image.h > image.w ? 'shot--portrait' : ''} ${className}">
           <img src="${image.src}" width="${image.w}" height="${image.h}" alt="${esc(image.alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
           ${image.caption ? `<figcaption>${esc(image.caption)}</figcaption>` : ''}
         </figure>`;
@@ -154,6 +154,7 @@ export function renderCasePage(project) {
           <dl class="case-meta">${meta}</dl>
         </div>
       </header>
+      <div class="case-details">
       ${lead}
       <section class="case-story" aria-label="Story">
         <div class="story-block reveal"><h2 class="case-h2">The problem</h2><p>${esc(project.problem)}</p></div>
@@ -171,6 +172,7 @@ export function renderCasePage(project) {
         <h2 id="stack-title" class="case-h2">Built with</h2>
         <ul class="tags">${project.stack.map(s => `<li>${esc(s)}</li>`).join('')}</ul>
       </section>
+      </div>
       <nav class="case-next" aria-label="Next project">
         <a href="${workUrl(next)}"><span class="next-kicker">Next project</span><span class="next-title">${esc(next.title)}<span class="next-arrow" aria-hidden="true">→</span></span></a>
       </nav>

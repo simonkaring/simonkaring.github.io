@@ -139,8 +139,8 @@ export const projects = [
       ['Distribution', 'Signed and notarised builds for macOS and Windows from a CI workflow, with tokens in the OS credential store.'],
     ],
     images: [
-      { src: '/work/gitty/graph.webp', w: 2000, h: 1250, alt: 'Gitty window with branches sidebar, commit graph with coloured lanes, and commit details.', caption: 'History view with the commit graph. Synthetic demo repository.' },
-      { src: '/work/gitty/diff.webp', w: 2000, h: 1250, alt: 'Gitty showing a file diff for a selected commit.', caption: 'Commit diff.' },
+      { src: '/work/gitty/graph.webp', w: 2000, h: 1250, alt: 'Gitty window with branches sidebar, commit graph with coloured lanes, working changes and commit details.', caption: 'Current Gitty history view. Synthetic demo repository.' },
+      { src: '/work/gitty/diff.webp', w: 2000, h: 1250, alt: 'Gitty showing a unified CSS file diff beside the selected commit’s details.', caption: 'Unified commit diff. Synthetic demo repository.' },
     ],
   },
   {
@@ -165,7 +165,7 @@ export const projects = [
       ['Backend', 'A Django Ninja API on PostgreSQL receives synced shifts and serves the feeds, deployed on Railway.'],
     ],
     images: [
-      { src: '/work/altiplan/extension.webp', w: 1280, h: 800, alt: 'Chrome extension popup next to a phone showing day, evening and night shifts.', caption: 'Chrome extension. Demo shifts.' },
+      { src: '/work/altiplan/extension.webp', w: 760, h: 2126, alt: 'Altiplan Calendar extension popup showing a calendar feed, QR code and three demo shifts for October 2026.', caption: 'Actual extension popup with synthetic shifts and a dummy subscription feed.' },
     ],
   },
   {
