@@ -61,7 +61,7 @@ const pointsMaterial = uniforms => new ShaderMaterial({
   depthWrite: false,
   vertexShader: /* glsl */ `
     ${COMMON}
-    uniform float uCamZ, uPR;
+    uniform float uCamZ, uPR, uNameScale;
     varying float vAlpha;
     varying float vAccent;
     void main() {
@@ -71,6 +71,7 @@ const pointsMaterial = uniforms => new ShaderMaterial({
       float hub = step(1.5, aSeed.z);
       float on = focusOn(t);
       float size = mix(1.5 + aSeed.y * .9 + hub * 5.5, 1.25 + aSeed.y * 1.1, t) * (1. + on * .35);
+      size *= mix(1., uNameScale, t);
       gl_PointSize = size * uPR * (uCamZ / -mv.z);
       gl_Position = projectionMatrix * mv;
       float depth = clamp((-mv.z - uCamZ + 450.) / 900., 0., 1.);
@@ -303,7 +304,7 @@ export async function initNetwork({ canvas, name, reducedMotion }) {
     uViewH: { value: innerHeight }, uPointer: { value: [99999, 99999] }, uPointerAmt: { value: 0 },
     uRadius: { value: mobile ? 80 : 150 }, uTilt: { value: [0, 0] }, uGraphCenter: { value: [0, 0, 0] },
     uOpacity: { value: 1 }, uGraphDim: { value: mobile ? 0.5 : 0.8 }, uLetterVis: { value: 0 }, uSystemVis: { value: 1 }, uActive: { value: -10 }, uActiveAmt: { value: 0 }, uCamZ: { value: 1 }, uPR: { value: 1 },
-    uInk: { value: new Color() }, uAccent: { value: new Color() },
+    uInk: { value: new Color() }, uAccent: { value: new Color() }, uNameScale: { value: 1 },
   };
   const points = new Points(new BufferGeometry(), pointsMaterial(uniforms));
   const lines = new LineSegments(new BufferGeometry(), linesMaterial(uniforms));
@@ -315,6 +316,7 @@ export async function initNetwork({ canvas, name, reducedMotion }) {
     const css = getComputedStyle(root);
     uniforms.uInk.value.set(css.getPropertyValue('--ink').trim());
     uniforms.uAccent.value.set(css.getPropertyValue('--accent').trim());
+    uniforms.uNameScale.value = css.colorScheme === 'light' ? 1.5 : 1;
     dirty = true;
   };
 
