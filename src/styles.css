@@ -74,6 +74,8 @@ main, .site-footer { position: relative; z-index: 1; }
 .step-n { display: block; font: 500 0.6875rem/1 var(--mono); color: var(--muted); margin-bottom: 0.75rem; }
 .about-body { grid-column: 6 / span 6; display: grid; gap: 1.5rem; font-size: clamp(1.0625rem, 1.35vw, 1.25rem); line-height: 1.5; letter-spacing: -0.01em; max-width: 36rem; }
 .stack-line { color: var(--muted); font-size: 0.9em; }
+/* Halo in the page colour so nodes passing behind small text don't break contrast. */
+.lifecycle, .about-body, .work-line { --halo: 0 0 3px var(--bg); text-shadow: var(--halo), var(--halo), var(--halo), var(--halo), 0 0 0.6em var(--bg), 0 0 0.6em var(--bg); }
 
 /* Work index -------------------------------------------------------------- */
 .work { padding: clamp(4rem, 12vh, 8rem) var(--gutter) clamp(6rem, 14vh, 10rem); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem; row-gap: clamp(3rem, 8vh, 5rem); }
