@@ -146,7 +146,8 @@ test('config page renders, fits and is accessible', async ({ page }, testInfo) =
   await nav.getByRole('link', { name: 'Linux', exact: true }).click();
   await expect(nav).toHaveClass(/is-docked/);
   await expect(nav.locator('.config-nav-inner')).toHaveCSS('position', 'fixed');
-  await expect(nav.locator('.config-nav-inner')).toHaveCSS('writing-mode', 'vertical-rl');
+  await expect(nav.locator('.config-nav-inner')).toHaveCSS('writing-mode', 'horizontal-tb');
+  await expect(nav.locator('.config-nav-inner')).toHaveCSS('flex-direction', 'column');
   await expect(nav.getByRole('link', { name: 'Linux', exact: true })).toHaveClass(/is-active/);
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(nav).toHaveCSS('position', 'sticky');

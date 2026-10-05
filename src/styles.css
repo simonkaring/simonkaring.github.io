@@ -278,15 +278,21 @@ main, .site-footer { position: relative; z-index: 1; }
 .config-nav a.is-active { color: var(--accent); }
 
 @media (min-width: 1100px) {
+  .js .config-content { width: calc(100% - 11rem); margin-right: 11rem; }
   /* Keep the bar's space; transforms and backdrop filters would trap the fixed rail. */
   .js .config-nav { position: relative; min-height: calc(2.5125rem + 2px); background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
-  .config-nav.is-docked .config-nav-inner { position: fixed; top: 50%; right: calc((var(--gutter) - 2rem) / 2); translate: 0 -50%; width: 2rem; max-height: calc(100dvh - 10rem); margin: 0; padding: 1rem 0.5rem; gap: 1.75rem; writing-mode: vertical-rl; border-left: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 85%, transparent); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
+  .config-nav.is-docked .config-nav-inner { position: fixed; top: 50%; right: 1rem; translate: 0 -50%; width: 9.5rem; max-height: calc(100dvh - 10rem); margin: 0; padding: 1rem; gap: 1.25rem; flex-direction: column; align-items: flex-start; border-left: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 85%, transparent); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
   .config-nav.is-docked a { position: relative; padding-block: 0.1rem; }
-  .config-nav.is-docked a.is-active::before { content: ''; position: absolute; left: -0.5rem; top: 0; bottom: 0; width: 2px; background: var(--accent); }
+  .config-nav.is-docked a.is-active::before { content: ''; position: absolute; left: -1rem; top: 0; bottom: 0; width: 2px; background: var(--accent); }
 }
 @media (min-width: 1100px) and (prefers-reduced-motion: no-preference) {
-  .config-nav.is-docked .config-nav-inner { animation: config-dock-in 0.45s var(--ease-out); }
-  @keyframes config-dock-in { from { opacity: 0; transform: translateX(0.5rem); } to { opacity: 1; transform: none; } }
+  .config-nav.is-docked .config-nav-inner { animation: config-dock-in 0.65s var(--ease-out); }
+  .config-nav.is-docked a { animation: config-link-in 0.45s var(--ease-out) 0.08s backwards; }
+  .config-nav.is-docked a:nth-child(2) { animation-delay: 0.13s; }
+  .config-nav.is-docked a:nth-child(3) { animation-delay: 0.18s; }
+  .config-nav.is-docked a:nth-child(4) { animation-delay: 0.23s; }
+  @keyframes config-dock-in { from { opacity: 0; transform: translateX(0.8rem); } to { opacity: 1; transform: none; } }
+  @keyframes config-link-in { from { opacity: 0; transform: translateY(0.4rem); } to { opacity: 1; transform: none; } }
 }
 @media (prefers-reduced-transparency: reduce) {
   .config-nav.is-docked .config-nav-inner { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
