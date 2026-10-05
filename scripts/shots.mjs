@@ -1,5 +1,5 @@
 // Visual review: node scripts/shots.mjs (against `npm run preview`).
-// Env: URL (default http://127.0.0.1:4321), OUT (output dir), ONLY (comma list: home,work,case).
+// Env: URL (default http://127.0.0.1:4321), OUT (output dir), ONLY (comma list: home,work,case,config).
 import { chromium } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
@@ -52,6 +52,20 @@ for (const [label, options] of devices) {
         await scrollTo(page, y);
         await page.waitForTimeout(900);
         await page.screenshot({ path: `${out}/${label}-${slug}-${i}.png` });
+      }
+    }
+  }
+  if (only.includes('config')) {
+    for (const width of label === 'desktop' ? [1100, 1440] : [390]) {
+      await page.setViewportSize({ width, height: options.viewport.height });
+      for (const theme of ['dark', 'light']) {
+        await page.goto(`${base}/config/`);
+        if (await page.evaluate(() => document.documentElement.dataset.theme || 'dark') !== theme) await page.locator('.theme-toggle').click();
+        await page.waitForTimeout(1200);
+        await page.screenshot({ path: `${out}/config-${width}-${theme}-top.png` });
+        await page.locator('.config-nav a[href="#linux"]').click();
+        await page.waitForTimeout(1600);
+        await page.screenshot({ path: `${out}/config-${width}-${theme}-rail.png` });
       }
     }
   }

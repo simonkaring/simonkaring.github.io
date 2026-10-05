@@ -94,21 +94,15 @@ document.querySelectorAll('.copy-btn').forEach(button => {
   });
 });
 
-const configNav = document.querySelector('.config-nav');
 const configSections = document.querySelectorAll('.config-section');
 const configNavLinks = document.querySelectorAll('.config-nav a');
+const configNav = document.querySelector('.config-nav');
 
-if (configNav) {
-  // Toggle vertical / sticky navigation when scrolling down past the initial nav position
-  const navSentinel = document.createElement('div');
-  navSentinel.className = 'config-nav-sentinel';
-  navSentinel.style.cssText = 'position: absolute; pointer-events: none; height: 1px; width: 1px;';
-  configNav.before(navSentinel);
-
-  const navObserver = new IntersectionObserver(([entry]) => {
-    configNav.classList.toggle('is-floating', !entry.isIntersecting);
-  }, { threshold: 0, rootMargin: '-68px 0px 0px 0px' });
-  navObserver.observe(navSentinel);
+if (configNav && 'IntersectionObserver' in window) {
+  const dockObserver = new IntersectionObserver(([entry]) => {
+    configNav.classList.toggle('is-docked', !entry.isIntersecting && entry.boundingClientRect.bottom <= 68);
+  }, { rootMargin: '-68px 0px 0px 0px' });
+  dockObserver.observe(configNav);
 }
 
 if (configSections.length && configNavLinks.length && 'IntersectionObserver' in window) {
@@ -121,8 +115,6 @@ if (configSections.length && configNavLinks.length && 'IntersectionObserver' in 
         });
       }
     }
-  }, { threshold: 0.2, rootMargin: '-10% 0px -60% 0px' });
+  }, { threshold: 0.1, rootMargin: '-110px 0px -55% 0px' });
   configSections.forEach(section => activeObserver.observe(section));
 }
-
-

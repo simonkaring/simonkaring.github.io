@@ -142,6 +142,19 @@ test('config page renders, fits and is accessible', async ({ page }, testInfo) =
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `config overflow at ${width}px`).toBe(true);
   }
+  const nav = page.getByRole('navigation', { name: 'On this page' });
+  await nav.getByRole('link', { name: 'Linux', exact: true }).click();
+  await expect(nav).toHaveClass(/is-docked/);
+  await expect(nav.locator('.config-nav-inner')).toHaveCSS('position', 'fixed');
+  await expect(nav.locator('.config-nav-inner')).toHaveCSS('writing-mode', 'vertical-rl');
+  await expect(nav.getByRole('link', { name: 'Linux', exact: true })).toHaveClass(/is-active/);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(nav).toHaveCSS('position', 'sticky');
+  await expect(nav.locator('.config-nav-inner')).toHaveCSS('writing-mode', 'horizontal-tb');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await expect(nav).not.toHaveClass(/is-docked/);
+  await expect(nav.locator('.config-nav-inner')).toHaveCSS('position', 'static');
   await page.setViewportSize(testInfo.project.use.viewport || { width: 390, height: 844 });
   await expectAccessibleInBothThemes(page, '/config/');
 });

@@ -263,34 +263,37 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 
 /* Config page ----------------------------------------------------------- */
-.config { max-width: 76rem; margin-inline: auto; padding: 9rem var(--gutter) 0; }
+.config { padding: 9rem 0 0; }
+.config-head, .config-content { max-width: 76rem; margin-inline: auto; padding-inline: var(--gutter); }
 .config-hero { max-width: 52rem; margin-top: 2.5rem; }
 .config-hero h1 { font-weight: 600; font-size: clamp(3rem, 9vw, 7rem); line-height: 0.95; letter-spacing: -0.055em; margin: 1.5rem 0 1.75rem; }
 .config-lede { max-width: 40rem; font-size: clamp(1.0625rem, 1.4vw, 1.3rem); line-height: 1.45; letter-spacing: -0.01em; color: var(--muted); }
 
-.config-nav { display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.5rem); margin-top: clamp(2.5rem, 7vh, 4rem); padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 500 0.8125rem/1 var(--mono); transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out), background 0.3s var(--ease-out); }
-.config-nav a { text-decoration: none; color: var(--muted); transition: color 0.2s var(--ease-out); }
-.config-nav a:hover, .config-nav a:focus-visible { color: var(--accent); }
+.config-nav { position: sticky; top: 4.25rem; z-index: 15; width: 100%; margin-top: clamp(2.5rem, 7vh, 4rem); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 500 0.8125rem/1 var(--mono); background: color-mix(in srgb, var(--bg) 85%, transparent); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
+@media (prefers-reduced-transparency: reduce) { .config-nav { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+.config-nav-inner { max-width: 76rem; margin-inline: auto; padding: 0.85rem var(--gutter); display: flex; align-items: center; gap: clamp(1.25rem, 3vw, 2.5rem); overflow-x: auto; scrollbar-width: none; }
+.config-nav-inner::-webkit-scrollbar { display: none; }
+.config-nav a { text-decoration: none; color: var(--muted); transition: color 0.2s var(--ease-out); white-space: nowrap; }
+.config-nav a:hover, .config-nav a:focus-visible { color: var(--ink); }
 .config-nav a.is-active { color: var(--accent); }
 
-@media (min-width: 1024px) {
-  .config-nav.is-floating { position: fixed; top: 6.5rem; left: max(1.5rem, calc((100vw - 76rem) / 2 + 1.5rem)); z-index: 15; flex-direction: column; align-items: flex-start; gap: 1rem; width: auto; margin-top: 0; padding: 1.25rem 1.4rem; background: color-mix(in srgb, var(--bg) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 12px 36px rgb(0 0 0 / 0.25); animation: navFadeIn 0.25s var(--ease-out); }
-  .config-nav.is-floating a { padding-left: 0.6rem; border-left: 2px solid transparent; }
-  .config-nav.is-floating a:hover, .config-nav.is-floating a:focus-visible { border-left-color: var(--line); }
-  .config-nav.is-floating a.is-active { border-left-color: var(--accent); color: var(--ink); }
+@media (min-width: 1100px) {
+  /* Keep the bar's space; transforms and backdrop filters would trap the fixed rail. */
+  .js .config-nav { position: relative; min-height: calc(2.5125rem + 2px); background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .config-nav.is-docked .config-nav-inner { position: fixed; top: 50%; right: calc((var(--gutter) - 2rem) / 2); translate: 0 -50%; width: 2rem; max-height: calc(100dvh - 10rem); margin: 0; padding: 1rem 0.5rem; gap: 1.75rem; writing-mode: vertical-rl; border-left: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 85%, transparent); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
+  .config-nav.is-docked a { position: relative; padding-block: 0.1rem; }
+  .config-nav.is-docked a.is-active::before { content: ''; position: absolute; left: -0.5rem; top: 0; bottom: 0; width: 2px; background: var(--accent); }
+}
+@media (min-width: 1100px) and (prefers-reduced-motion: no-preference) {
+  .config-nav.is-docked .config-nav-inner { animation: config-dock-in 0.45s var(--ease-out); }
+  @keyframes config-dock-in { from { opacity: 0; transform: translateX(0.5rem); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .config-nav.is-docked .config-nav-inner { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 
-@keyframes navFadeIn {
-  from { opacity: 0; transform: translateY(-0.5rem); }
-  to { opacity: 1; transform: none; }
-}
-
-@media (max-width: 1023px) {
-  .config-nav.is-floating { position: sticky; top: 4.25rem; z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-}
-
-.config-section { display: grid; grid-template-columns: 14rem minmax(0, 1fr); column-gap: clamp(2rem, 6vw, 5rem); row-gap: 1.5rem; padding: clamp(3.5rem, 9vh, 6rem) 0; border-bottom: 1px solid var(--line); }
-.config-side { position: sticky; top: 6rem; align-self: start; }
+.config-section { display: grid; grid-template-columns: 14rem minmax(0, 1fr); column-gap: clamp(2rem, 6vw, 5rem); row-gap: 1.5rem; padding: clamp(3.5rem, 9vh, 6rem) 0; border-bottom: 1px solid var(--line); scroll-margin-top: 7.25rem; }
+.config-side { position: sticky; top: 7.75rem; align-self: start; }
 .config-side h2 { font-weight: 600; font-size: clamp(1.75rem, 2.8vw, 2.75rem); line-height: 1; letter-spacing: -0.04em; margin: 0; }
 .config-note { margin-top: 1rem; font-size: 0.9rem; line-height: 1.5; color: var(--muted); max-width: 22ch; }
 .config-body { display: grid; gap: 0.75rem; min-width: 0; }
