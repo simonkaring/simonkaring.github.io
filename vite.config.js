@@ -37,7 +37,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         home: resolve(root, 'index.html'),
-        macConfig: resolve(root, 'config/mac/index.html'),
+        config: resolve(root, 'config/index.html'),
         ...Object.fromEntries(projects.map(p => [`work-${p.slug}`, resolve(root, `work/${p.slug}/index.html`)])),
       },
     },

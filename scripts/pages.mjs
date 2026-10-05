@@ -179,7 +179,7 @@ export function renderCasePage(project) {
     </main>
     <footer class="site-footer">
       <span>Simon Karing</span>
-      <a href="/config/mac/">Mac config</a>
+      <a href="/config/">Config</a>
     </footer>
   </body>
 </html>

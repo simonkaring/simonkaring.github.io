@@ -6,12 +6,15 @@ const rendering = page => page.locator('html');
 // Load the page fresh in each colour scheme rather than flipping the theme on a live page:
 // WebKit on slow CI runners can be read mid-restyle, which gives false contrast failures.
 async function expectAccessibleInBothThemes(page, path) {
-  for (const colorScheme of ['dark', 'light']) {
-    await page.emulateMedia({ reducedMotion: 'reduce', colorScheme });
+  for (const theme of ['dark', 'light']) {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.addInitScript(t => {
+      try { localStorage.setItem('sk-theme', t); } catch (_) {}
+    }, theme);
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready);
     const report = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
-    expect(report.violations, `${path} ${colorScheme}`).toEqual([]);
+    expect(report.violations, `${path} ${theme}`).toEqual([]);
   }
 }
 
@@ -31,8 +34,8 @@ test('content, responsive layout and local routes', async ({ page, request }, te
   await page.screenshot({ path: testInfo.outputPath('hero.png') });
   const localLinks = await page.locator('a[href^="/"]').evaluateAll(links => [...new Set(links.map(link => link.getAttribute('href').split('#')[0]))]);
   for (const link of localLinks) expect((await request.get(link || '/')).ok(), link).toBe(true);
-  await page.goto('/config/mac/');
-  await expect(page.getByRole('heading', { name: 'Mac Config' })).toBeVisible();
+  await page.goto('/config/');
+  await expect(page.getByRole('heading', { level: 1, name: /Fresh machine/ })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
@@ -124,4 +127,21 @@ test('case study pages render, fit and are accessible', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
   }
   for (const slug of ['servicehub', 'voltlink']) await expectAccessibleInBothThemes(page, `/work/${slug}/`);
+});
+
+test('config page renders, fits and is accessible', async ({ page }, testInfo) => {
+  await page.goto('/config/');
+  await expect(page.getByRole('heading', { level: 1, name: /Fresh machine/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'macOS' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Windows' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Linux' })).toBeVisible();
+  // Each platform keeps its install commands, and the agent settings carry the deny rules.
+  expect(await page.locator('.app-list li').count()).toBeGreaterThan(20);
+  await expect(page.locator('.code', { hasText: 'git push' })).not.toHaveCount(0);
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `config overflow at ${width}px`).toBe(true);
+  }
+  await page.setViewportSize(testInfo.project.use.viewport || { width: 390, height: 844 });
+  await expectAccessibleInBothThemes(page, '/config/');
 });

@@ -19,8 +19,8 @@
 - Motion must be motivated. Support keyboard use, visible focus, reduced motion, WCAG AA contrast in both themes, and responsive layouts.
 
 ## Stack and workflow
-- Vite multi-page static build (`index.html`, `config/mac/index.html`) to `dist/`; three.js is lazy-loaded. Deployed by `.github/workflows/deploy.yml` after tests pass. Never commit `dist/`.
-- Preserve the `/config/mac/` route.
+- Vite multi-page static build (`index.html`, `config/index.html`) to `dist/`; three.js is lazy-loaded. Deployed by `.github/workflows/deploy.yml` after tests pass. Never commit `dist/`.
+- Preserve the `/config/` route.
 - Case study content lives in `src/content/projects.js`; pages are generated into the gitignored `work/` folder. Each project maps to one cluster in the network (array order). Every screenshot in `public/work/` must be reviewed for names, addresses, URLs and branding before it is added.
 - Use `.agents/skills/design-taste-frontend/SKILL.md` for frontend design work, contextually with this file.
 - Verify with `npm run build && npm test` (Playwright + axe, desktop, mobile and WebKit). Review screenshots with `node scripts/shots.mjs` against `npm run preview`.

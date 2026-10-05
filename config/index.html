@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0c0d0f">
+    <title>Config · Simon Karing</title>
+    <meta name="description" content="How I set up a fresh machine on macOS, Windows and Linux, plus the permission settings I give coding agents.">
+    <link rel="canonical" href="https://simonkaring.github.io/config/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Config · Simon Karing">
+    <meta property="og:description" content="How I set up a fresh machine on macOS, Windows and Linux, plus the permission settings I give coding agents.">
+    <meta property="og:url" content="https://simonkaring.github.io/config/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <script>
+      try { const t = localStorage.getItem('sk-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (_) {}
+      document.documentElement.classList.add('js');
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body class="config-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="mark" href="/" aria-label="Simon Karing, home">sk<span aria-hidden="true">/</span></a>
+      <nav aria-label="Main">
+        <a href="/#work">Work</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+        <button class="theme-toggle" type="button" hidden><span class="theme-dot" aria-hidden="true"></span><span data-theme-label>Light</span></button>
+      </nav>
+    </header>
+
+    <main id="main" class="config">
+      <a class="back-link" href="/">← Back home</a>
+
+      <header class="config-hero reveal">
+        <p class="index-label" aria-hidden="true">Config</p>
+        <h1>Fresh machine, <em>same setup.</em></h1>
+        <p class="config-lede">What I install on a new laptop, and the permission settings I give coding agents so they can move quickly without being able to push, rewrite history or delete work.</p>
+      </header>
+
+      <nav class="config-nav reveal" aria-label="On this page">
+        <a href="#macos">macOS</a>
+        <a href="#windows">Windows</a>
+        <a href="#linux">Linux</a>
+        <a href="#agents">Coding agents</a>
+      </nav>
+
+      <section id="macos" class="config-section reveal" aria-labelledby="macos-title">
+        <div class="config-side">
+          <p class="step-n" aria-hidden="true">01</p>
+          <h2 id="macos-title">macOS</h2>
+          <p class="config-note">Apple silicon. Homebrew for everything, the App Store only for the two apps that live there.</p>
+        </div>
+        <div class="config-body">
+          <h3 class="config-h3">Package manager</h3>
+          <pre class="code" tabindex="0" role="region" aria-label="Homebrew installation"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+          <p class="config-p">Keep the whole install current with <code class="inline-code">brew upgrade</code>. To see what is actually on the machine, <code class="inline-code">brew list --cask</code>.</p>
+
+          <h3 class="config-h3">Editors &amp; IDEs</h3>
+          <ul class="app-list">
+            <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">brew install --cask visual-studio-code</code></li>
+            <li><span class="app-name">Android Studio</span><code class="app-cmd">brew install --cask android-studio</code></li>
+            <li><span class="app-name">Figma</span><code class="app-cmd">brew install --cask figma</code></li>
+          </ul>
+
+          <h3 class="config-h3">Browsers &amp; communication</h3>
+          <ul class="app-list">
+            <li><span class="app-name">Vivaldi</span><code class="app-cmd">brew install --cask vivaldi</code></li>
+            <li><span class="app-name">Discord</span><code class="app-cmd">brew install --cask discord</code></li>
+            <li><span class="app-name">Slack</span><code class="app-cmd">brew install --cask slack</code></li>
+          </ul>
+
+          <h3 class="config-h3">Media</h3>
+          <ul class="app-list">
+            <li><span class="app-name">Spotify</span><code class="app-cmd">brew install --cask spotify</code></li>
+            <li><span class="app-name">Plex Media Server</span><code class="app-cmd">brew install --cask plex-media-server</code></li>
+            <li><span class="app-name">qBittorrent</span><code class="app-cmd">brew install --cask qbittorrent</code></li>
+          </ul>
+
+          <h3 class="config-h3">Security &amp; network</h3>
+          <ul class="app-list">
+            <li><span class="app-name">Bitwarden</span><code class="app-cmd">brew install --cask bitwarden</code></li>
+            <li><span class="app-name">Surfshark</span><code class="app-cmd">brew install --cask surfshark</code></li>
+            <li><span class="app-name">NordVPN</span><code class="app-cmd">brew install --cask nordvpn</code></li>
+          </ul>
+
+          <h3 class="config-h3">Terminal &amp; developer tools</h3>
+          <ul class="app-list">
+            <li><span class="app-name">Warp</span><code class="app-cmd">brew install --cask warp</code></li>
+            <li><span class="app-name">GitKraken</span><code class="app-cmd">brew install --cask gitkraken</code></li>
+            <li><span class="app-name">Boring Notch</span><code class="app-cmd">brew install --cask TheBoredTeam/boring-notch/boring-notch</code></li>
+            <li><span class="app-name">Ice</span><code class="app-cmd">brew install --cask jordanbaird-ice</code></li>
+            <li><span class="app-name">nvm</span><code class="app-cmd">brew install nvm</code></li>
+            <li><span class="app-name">Java</span><code class="app-cmd">brew install java</code></li>
+            <li><span class="app-name">Python</span><code class="app-cmd">brew install python</code></li>
+            <li><span class="app-name">Fira Code</span><code class="app-cmd">brew install --cask font-fira-code</code></li>
+          </ul>
+
+          <h3 class="config-h3">App Store apps</h3>
+          <p class="config-p">Two apps only exist on the App Store, so <code class="inline-code">mas</code> handles them.</p>
+          <pre class="code" tabindex="0" role="region" aria-label="App Store apps"><code>brew install mas
+mas install 441258766   # Magnet
+mas install 497799835   # Xcode</code></pre>
+
+          <h3 class="config-h3">Shell</h3>
+          <pre class="code" tabindex="0" role="region" aria-label="Oh My Zsh installation"><code>sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</code></pre>
+          <p class="config-p">Oh My Zsh with the <code class="inline-code">robbyrussell</code> theme and the <code class="inline-code">git</code> plugin. Screenshots save to a folder of my choosing, set once in the Screenshot app options.</p>
+        </div>
+      </section>
+
+      <section id="windows" class="config-section reveal" aria-labelledby="windows-title">
+        <div class="config-side">
+          <p class="step-n" aria-hidden="true">02</p>
+          <h2 id="windows-title">Windows</h2>
+          <p class="config-note">winget ships with Windows, so there is nothing to install first. WSL for anything that expects a Unix shell.</p>
+        </div>
+        <div class="config-body">
+          <h3 class="config-h3">Package manager</h3>
+          <p class="config-p">winget is part of the App Installer on Windows 10 and 11.</p>
+          <pre class="code" tabindex="0" role="region" aria-label="winget commands"><code>winget upgrade --all
+winget search vivaldi   # confirm the current ID before installing</code></pre>
+
+          <h3 class="config-h3">Install the set</h3>
+          <ul class="app-list">
+            <li><span class="app-name">Vivaldi</span><code class="app-cmd">winget install --id Vivaldi.Vivaldi -e</code></li>
+            <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">winget install --id Microsoft.VisualStudioCode -e</code></li>
+            <li><span class="app-name">Discord</span><code class="app-cmd">winget install --id Discord.Discord -e</code></li>
+            <li><span class="app-name">Slack</span><code class="app-cmd">winget install --id SlackTechnologies.Slack -e</code></li>
+            <li><span class="app-name">Spotify</span><code class="app-cmd">winget install --id Spotify.Spotify -e</code></li>
+            <li><span class="app-name">qBittorrent</span><code class="app-cmd">winget install --id qBittorrent.qBittorrent -e</code></li>
+            <li><span class="app-name">Bitwarden</span><code class="app-cmd">winget install --id Bitwarden.Bitwarden -e</code></li>
+            <li><span class="app-name">Figma</span><code class="app-cmd">winget install --id Figma.Figma -e</code></li>
+            <li><span class="app-name">GitKraken</span><code class="app-cmd">winget install --id GitKraken.GitKraken -e</code></li>
+            <li><span class="app-name">Android Studio</span><code class="app-cmd">winget install --id Google.AndroidStudio -e</code></li>
+            <li><span class="app-name">Git</span><code class="app-cmd">winget install --id Git.Git -e</code></li>
+          </ul>
+          <p class="config-p">IDs get republished as packages move, so <code class="inline-code">winget search &lt;name&gt;</code> is the tie-breaker when an install line stops matching. VPN clients are best installed from their own site.</p>
+
+          <h3 class="config-h3">WSL</h3>
+          <pre class="code" tabindex="0" role="region" aria-label="WSL installation"><code>wsl --install
+wsl --set-default-version 2</code></pre>
+          <p class="config-p">Once WSL is up, the Linux list below applies inside it.</p>
+        </div>
+      </section>
+
+      <section id="linux" class="config-section reveal" aria-labelledby="linux-title">
+        <div class="config-side">
+          <p class="step-n" aria-hidden="true">03</p>
+          <h2 id="linux-title">Linux</h2>
+          <p class="config-note">Debian and Ubuntu with Flatpak for the graphical apps. Other distributions swap apt for dnf or pacman.</p>
+        </div>
+        <div class="config-body">
+          <h3 class="config-h3">Base system</h3>
+          <pre class="code" tabindex="0" role="region" aria-label="Base packages"><code>sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install -y git curl jq build-essential</code></pre>
+
+          <h3 class="config-h3">Flatpak</h3>
+          <pre class="code" tabindex="0" role="region" aria-label="Flatpak setup"><code>sudo apt install -y flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></pre>
+
+          <h3 class="config-h3">Graphical apps</h3>
+          <ul class="app-list">
+            <li><span class="app-name">Vivaldi</span><code class="app-cmd">flatpak install flathub com.vivaldi.Vivaldi</code></li>
+            <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">flatpak install flathub com.visualstudio.code</code></li>
+            <li><span class="app-name">Discord</span><code class="app-cmd">flatpak install flathub com.discordapp.Discord</code></li>
+            <li><span class="app-name">Slack</span><code class="app-cmd">flatpak install flathub com.slack.Slack</code></li>
+            <li><span class="app-name">Spotify</span><code class="app-cmd">flatpak install flathub com.spotify.Client</code></li>
+            <li><span class="app-name">qBittorrent</span><code class="app-cmd">flatpak install flathub org.qbittorrent.qBittorrent</code></li>
+            <li><span class="app-name">Bitwarden</span><code class="app-cmd">flatpak install flathub com.bitwarden.desktop</code></li>
+          </ul>
+          <p class="config-p">Snap is the alternative where a package is not on Flathub: <code class="inline-code">sudo snap install code --classic</code>.</p>
+
+          <h3 class="config-h3">Shell</h3>
+          <pre class="code" tabindex="0" role="region" aria-label="Shell installation"><code>sudo apt install -y zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</code></pre>
+        </div>
+      </section>
+
+      <section id="agents" class="config-section reveal" aria-labelledby="agents-title">
+        <div class="config-side">
+          <p class="step-n" aria-hidden="true">04</p>
+          <h2 id="agents-title">Coding agents</h2>
+          <p class="config-note">One permission baseline, applied to every agent I run.</p>
+        </div>
+        <div class="config-body">
+          <p class="config-p">Agents are most useful when they can read, search, test and commit without stopping to ask, and least useful when they can publish, rewrite history or delete work. The same three rules hold across tools:</p>
+
+          <div class="rule-grid">
+            <div class="rule-card rule-card--allow">
+              <h3 class="config-h3">Allow</h3>
+              <ul>
+                <li>Read, search, list</li>
+                <li>git status, add, commit, diff, log, show</li>
+                <li>Tests and builds</li>
+              </ul>
+            </div>
+            <div class="rule-card rule-card--ask">
+              <h3 class="config-h3">Ask</h3>
+              <ul>
+                <li>Installing packages</li>
+                <li>Adding dependencies</li>
+              </ul>
+            </div>
+            <div class="rule-card rule-card--deny">
+              <h3 class="config-h3">Deny</h3>
+              <ul>
+                <li>git push, reset --hard, clean -fd</li>
+                <li>Deleting branches</li>
+                <li>rm -rf, publish, docker push</li>
+              </ul>
+            </div>
+          </div>
+
+          <article class="settings-card">
+            <h3 class="config-h3">Antigravity CLI</h3>
+            <p class="setting-file"><code>~/.gemini/antigravity-cli/settings.json</code></p>
+            <pre class="code" tabindex="0" role="region" aria-label="Antigravity CLI settings"><code>{
+  "agentMode": "accept-edits",
+  "colorScheme": "dark",
+  "permissions": {
+    "allow": [
+      "command(git status)",
+      "command(git add)",
+      "command(git commit)",
+      "command(git diff)",
+      "command(git log)",
+      "command(git show)",
+      "command(ls)",
+      "command(cat)",
+      "command(grep)",
+      "command(mkdir)",
+      "command(jq)",
+      "command(npm test)",
+      "command(npm run build)",
+      "command(cargo test)"
+    ],
+    "ask": [
+      "command(npm install*)",
+      "command(cargo add*)"
+    ],
+    "deny": [
+      "command(git push*)",
+      "command(git reset --hard*)",
+      "command(git clean -fd*)",
+      "command(git branch -D*)",
+      "command(rm -rf *)",
+      "command(npm publish*)",
+      "command(docker push*)",
+      "read_file(**/.env*)",
+      "write_file(.git/*)"
+    ]
+  },
+  "statusLine": {
+    "command": "sh ~/.gemini/statusline.sh",
+    "enabled": true,
+    "stack_with_default": true
+  },
+  "toolPermission": "always-proceed",
+  "verbosity": "low"
+}</code></pre>
+            <p class="config-p">The status line reads the session JSON from stdin, so a small shell script can print the directory, branch, model, context used and remaining quota in one line.</p>
+          </article>
+
+          <article class="settings-card">
+            <h3 class="config-h3">opencode</h3>
+            <p class="setting-file"><code>~/.config/opencode/opencode.jsonc</code></p>
+            <pre class="code" tabindex="0" role="region" aria-label="opencode settings"><code>{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "git status": "allow",
+      "git add": "allow",
+      "git commit": "allow",
+      "git diff": "allow",
+      "git log": "allow",
+      "git show": "allow",
+      "npm test": "allow",
+      "npm run build": "allow",
+      "git push": "deny",
+      "git push *": "deny",
+      "git reset --hard *": "deny",
+      "git clean *": "deny",
+      "git branch -D *": "deny",
+      "rm *": "deny",
+      "mv *": "deny"
+    }
+  }
+}</code></pre>
+            <p class="config-p">Everything unmatched falls back to <code class="inline-code">ask</code>, so a new command is a confirmation rather than a surprise. Terminal scrolling lives in <code class="inline-code">~/.config/opencode/tui.json</code>.</p>
+          </article>
+
+          <article class="settings-card">
+            <h3 class="config-h3">Freebuff</h3>
+            <p class="setting-file"><code>~/.config/manicode/settings.json</code></p>
+            <pre class="code" tabindex="0" role="region" aria-label="Freebuff settings"><code>{
+  "mode": "DEFAULT",
+  "adsEnabled": true,
+  "freebuffCatalogReasoningEfforts": {
+    "m-096e75164d": "high"
+  }
+}</code></pre>
+            <p class="config-p">Freebuff keeps its choices in a single settings file: the approval mode, whether ads are shown, the selected model key and per-model reasoning effort. Command approval happens in the session itself, so there is no allow and deny list to maintain. <span class="provenance">Keys as observed on my machine.</span></p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Simon Karing</span>
+      <a href="/">Home</a>
+    </footer>
+  </body>
+</html>

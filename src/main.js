@@ -3,12 +3,11 @@ import '@fontsource-variable/geist-mono/wght.css';
 import './styles.css';
 
 const root = document.documentElement;
-const systemLight = matchMedia('(prefers-color-scheme: light)');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 // Theme ------------------------------------------------------------------
 const themeButton = document.querySelector('.theme-toggle');
-const currentTheme = () => root.dataset.theme || (systemLight.matches ? 'light' : 'dark');
+const currentTheme = () => root.dataset.theme || 'dark';
 function syncTheme() {
   const theme = currentTheme();
   const next = theme === 'dark' ? 'light' : 'dark';
@@ -25,7 +24,6 @@ if (themeButton) {
     try { localStorage.setItem('sk-theme', root.dataset.theme); } catch (_) { /* storage may be unavailable */ }
     syncTheme();
   });
-  systemLight.addEventListener('change', syncTheme);
 }
 
 // Scroll reveals -----------------------------------------------------------

@@ -12,9 +12,6 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: dark;
 }
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme='dark']) { --bg: #ebe9e3; --ink: #111214; --muted: #5b5a56; --line: rgb(17 18 20 / 0.14); --accent: #b8340a; --focus: #b8340a; color-scheme: light; }
-}
 :root[data-theme='light'] { --bg: #ebe9e3; --ink: #111214; --muted: #5b5a56; --line: rgb(17 18 20 / 0.14); --accent: #b8340a; --focus: #b8340a; color-scheme: light; }
 
 /* Base ------------------------------------------------------------------ */
@@ -200,8 +197,6 @@ main, .site-footer { position: relative; z-index: 1; }
 .arch-box--planned { border-style: dashed; background: transparent; }
 
 /* Document pages -------------------------------------------------------- */
-.document { max-width: 46rem; padding: 9rem var(--gutter) 6rem; min-height: 80dvh; }
-.document h1 { font-weight: 600; font-size: clamp(3rem, 9vw, 6rem); line-height: 0.95; letter-spacing: -0.055em; margin: 2.5rem 0 2rem; }
 .back-link { font: 500 0.8125rem/1 var(--mono); color: var(--muted); text-decoration: none; }
 .back-link:hover { color: var(--ink); }
 
@@ -265,4 +260,44 @@ main, .site-footer { position: relative; z-index: 1; }
   .case-title { view-transition-name: case-title; }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.45s; }
   ::view-transition-group(case-title) { animation-duration: 0.7s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+}
+
+/* Config page ----------------------------------------------------------- */
+.config { max-width: 76rem; margin-inline: auto; padding: 9rem var(--gutter) 0; }
+.config-hero { max-width: 52rem; margin-top: 2.5rem; }
+.config-hero h1 { font-weight: 600; font-size: clamp(3rem, 9vw, 7rem); line-height: 0.95; letter-spacing: -0.055em; margin: 1.5rem 0 1.75rem; }
+.config-lede { max-width: 40rem; font-size: clamp(1.0625rem, 1.4vw, 1.3rem); line-height: 1.45; letter-spacing: -0.01em; color: var(--muted); }
+.config-nav { display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.5rem); margin-top: clamp(2.5rem, 7vh, 4rem); padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 500 0.8125rem/1 var(--mono); }
+.config-nav a { text-decoration: none; color: var(--muted); }
+.config-nav a:hover, .config-nav a:focus-visible { color: var(--accent); }
+.config-section { display: grid; grid-template-columns: 14rem minmax(0, 1fr); column-gap: clamp(2rem, 6vw, 5rem); row-gap: 1.5rem; padding: clamp(3.5rem, 9vh, 6rem) 0; border-bottom: 1px solid var(--line); }
+.config-side { position: sticky; top: 6rem; align-self: start; }
+.config-side h2 { font-weight: 600; font-size: clamp(1.75rem, 2.8vw, 2.75rem); line-height: 1; letter-spacing: -0.04em; margin: 0; }
+.config-note { margin-top: 1rem; font-size: 0.9rem; line-height: 1.5; color: var(--muted); max-width: 22ch; }
+.config-body { display: grid; gap: 0.75rem; min-width: 0; }
+.config-h3 { font: 500 0.75rem/1.2 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); margin: 1.75rem 0 0.25rem; }
+.config-body > .config-h3:first-child, .rule-card .config-h3, .settings-card .config-h3 { margin-top: 0; }
+.config-p { font-size: 1rem; line-height: 1.55; color: var(--muted); max-width: 44rem; }
+.inline-code { font: 500 0.875em/1 var(--mono); color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); padding: 0.15em 0.4em; border-radius: 2px; }
+.code { margin: 0; padding: 1rem 1.15rem; border: 1px solid var(--line); background: color-mix(in srgb, var(--ink) 5%, var(--bg)); overflow-x: auto; font: 500 0.8125rem/1.6 var(--mono); color: var(--ink); tab-size: 2; }
+.code code { font: inherit; }
+.app-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+.app-list li { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); align-items: baseline; column-gap: 1.25rem; padding: 0.7rem 0; border-top: 1px solid var(--line); }
+.app-name { font-weight: 500; font-size: 0.975rem; letter-spacing: -0.01em; }
+.app-cmd { font: 500 0.8125rem/1.5 var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+.rule-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 0.5rem; }
+.rule-card { padding: 1rem 1.1rem 1.25rem; border: 1px solid var(--line); background: color-mix(in srgb, var(--ink) 3%, var(--bg)); }
+.rule-card--ask { border-style: dashed; }
+.rule-card--deny { border-color: var(--accent); }
+.rule-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; font: 500 0.75rem/1.45 var(--mono); color: var(--muted); }
+.settings-card { display: grid; gap: 0.75rem; padding-top: 2.25rem; margin-top: 1.5rem; border-top: 1px solid var(--line); }
+.setting-file code { font: 500 0.8125rem/1.5 var(--mono); color: var(--muted); }
+.provenance { color: var(--muted); font-style: italic; }
+
+@media (max-width: 767px) {
+  .config-section { grid-template-columns: 1fr; }
+  .config-side { position: static; }
+  .config-note { max-width: none; }
+  .rule-grid { grid-template-columns: 1fr; }
+  .app-list li { grid-template-columns: 1fr; row-gap: 0.25rem; }
 }
