@@ -40,143 +40,226 @@
         <p class="config-lede">What I install on a new laptop, and the permission settings I give coding agents so they can move quickly without being able to push, rewrite history or delete work.</p>
       </header>
 
-      <nav class="config-nav reveal" aria-label="On this page">
-        <a href="#macos">macOS</a>
-        <a href="#windows">Windows</a>
-        <a href="#linux">Linux</a>
-        <a href="#agents">Coding agents</a>
-      </nav>
+      <div class="config-layout">
+        <nav class="config-nav reveal" aria-label="On this page">
+          <a href="#macos">macOS</a>
+          <a href="#windows">Windows</a>
+          <a href="#linux">Linux</a>
+          <a href="#agents">Coding agents</a>
+        </nav>
 
-      <section id="macos" class="config-section reveal" aria-labelledby="macos-title">
-        <div class="config-side">
-          <p class="step-n" aria-hidden="true">01</p>
-          <h2 id="macos-title">macOS</h2>
-          <p class="config-note">Apple silicon. Homebrew for everything, the App Store only for the two apps that live there.</p>
-        </div>
-        <div class="config-body">
-          <h3 class="config-h3">Package manager</h3>
-          <pre class="code" tabindex="0" role="region" aria-label="Homebrew installation"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
-          <p class="config-p">Keep the whole install current with <code class="inline-code">brew upgrade</code>. To see what is actually on the machine, <code class="inline-code">brew list --cask</code>.</p>
+        <div class="config-content">
+          <section id="macos" class="config-section reveal" aria-labelledby="macos-title">
+            <div class="config-side">
+              <p class="step-n" aria-hidden="true">01</p>
+              <h2 id="macos-title">macOS</h2>
+              <p class="config-note">Apple silicon. Homebrew for everything, the App Store only for the two apps that live there.</p>
+            </div>
+            <div class="config-body">
+              <h3 class="config-h3">Package manager</h3>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy Homebrew command">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="Homebrew installation"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+              </div>
+              <p class="config-p">Keep the whole install current with <code class="inline-code">brew upgrade</code>. To see what is actually on the machine, <code class="inline-code">brew list --cask</code>.</p>
 
-          <h3 class="config-h3">Editors &amp; IDEs</h3>
-          <ul class="app-list">
-            <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">brew install --cask visual-studio-code</code></li>
-            <li><span class="app-name">Android Studio</span><code class="app-cmd">brew install --cask android-studio</code></li>
-            <li><span class="app-name">Figma</span><code class="app-cmd">brew install --cask figma</code></li>
-          </ul>
+              <h3 class="config-h3">Install everything</h3>
+              <p class="config-p">Single command to install all GUI applications, CLI tools, runtime versions and developer fonts via Homebrew:</p>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy all macOS brew commands">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="All macOS brew packages"><code>brew install --cask \
+  visual-studio-code \
+  android-studio \
+  figma \
+  vivaldi \
+  discord \
+  slack \
+  spotify \
+  plex-media-server \
+  qbittorrent \
+  bitwarden \
+  surfshark \
+  nordvpn \
+  warp \
+  gitkraken \
+  TheBoredTeam/boring-notch/boring-notch \
+  jordanbaird-ice \
+  font-fira-code && \
+brew install nvm java python mas</code></pre>
+              </div>
 
-          <h3 class="config-h3">Browsers &amp; communication</h3>
-          <ul class="app-list">
-            <li><span class="app-name">Vivaldi</span><code class="app-cmd">brew install --cask vivaldi</code></li>
-            <li><span class="app-name">Discord</span><code class="app-cmd">brew install --cask discord</code></li>
-            <li><span class="app-name">Slack</span><code class="app-cmd">brew install --cask slack</code></li>
-          </ul>
+              <h3 class="config-h3">Editors &amp; IDEs</h3>
+              <ul class="app-list">
+                <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">brew install --cask visual-studio-code</code></li>
+                <li><span class="app-name">Android Studio</span><code class="app-cmd">brew install --cask android-studio</code></li>
+                <li><span class="app-name">Figma</span><code class="app-cmd">brew install --cask figma</code></li>
+              </ul>
 
-          <h3 class="config-h3">Media</h3>
-          <ul class="app-list">
-            <li><span class="app-name">Spotify</span><code class="app-cmd">brew install --cask spotify</code></li>
-            <li><span class="app-name">Plex Media Server</span><code class="app-cmd">brew install --cask plex-media-server</code></li>
-            <li><span class="app-name">qBittorrent</span><code class="app-cmd">brew install --cask qbittorrent</code></li>
-          </ul>
+              <h3 class="config-h3">Browsers &amp; communication</h3>
+              <ul class="app-list">
+                <li><span class="app-name">Vivaldi</span><code class="app-cmd">brew install --cask vivaldi</code></li>
+                <li><span class="app-name">Discord</span><code class="app-cmd">brew install --cask discord</code></li>
+                <li><span class="app-name">Slack</span><code class="app-cmd">brew install --cask slack</code></li>
+              </ul>
 
-          <h3 class="config-h3">Security &amp; network</h3>
-          <ul class="app-list">
-            <li><span class="app-name">Bitwarden</span><code class="app-cmd">brew install --cask bitwarden</code></li>
-            <li><span class="app-name">Surfshark</span><code class="app-cmd">brew install --cask surfshark</code></li>
-            <li><span class="app-name">NordVPN</span><code class="app-cmd">brew install --cask nordvpn</code></li>
-          </ul>
+              <h3 class="config-h3">Media</h3>
+              <ul class="app-list">
+                <li><span class="app-name">Spotify</span><code class="app-cmd">brew install --cask spotify</code></li>
+                <li><span class="app-name">Plex Media Server</span><code class="app-cmd">brew install --cask plex-media-server</code></li>
+                <li><span class="app-name">qBittorrent</span><code class="app-cmd">brew install --cask qbittorrent</code></li>
+              </ul>
 
-          <h3 class="config-h3">Terminal &amp; developer tools</h3>
-          <ul class="app-list">
-            <li><span class="app-name">Warp</span><code class="app-cmd">brew install --cask warp</code></li>
-            <li><span class="app-name">GitKraken</span><code class="app-cmd">brew install --cask gitkraken</code></li>
-            <li><span class="app-name">Boring Notch</span><code class="app-cmd">brew install --cask TheBoredTeam/boring-notch/boring-notch</code></li>
-            <li><span class="app-name">Ice</span><code class="app-cmd">brew install --cask jordanbaird-ice</code></li>
-            <li><span class="app-name">nvm</span><code class="app-cmd">brew install nvm</code></li>
-            <li><span class="app-name">Java</span><code class="app-cmd">brew install java</code></li>
-            <li><span class="app-name">Python</span><code class="app-cmd">brew install python</code></li>
-            <li><span class="app-name">Fira Code</span><code class="app-cmd">brew install --cask font-fira-code</code></li>
-          </ul>
+              <h3 class="config-h3">Security &amp; network</h3>
+              <ul class="app-list">
+                <li><span class="app-name">Bitwarden</span><code class="app-cmd">brew install --cask bitwarden</code></li>
+                <li><span class="app-name">Surfshark</span><code class="app-cmd">brew install --cask surfshark</code></li>
+                <li><span class="app-name">NordVPN</span><code class="app-cmd">brew install --cask nordvpn</code></li>
+              </ul>
 
-          <h3 class="config-h3">App Store apps</h3>
-          <p class="config-p">Two apps only exist on the App Store, so <code class="inline-code">mas</code> handles them.</p>
-          <pre class="code" tabindex="0" role="region" aria-label="App Store apps"><code>brew install mas
-mas install 441258766   # Magnet
+              <h3 class="config-h3">Terminal &amp; developer tools</h3>
+              <ul class="app-list">
+                <li><span class="app-name">Warp</span><code class="app-cmd">brew install --cask warp</code></li>
+                <li><span class="app-name">GitKraken</span><code class="app-cmd">brew install --cask gitkraken</code></li>
+                <li><span class="app-name">Boring Notch</span><code class="app-cmd">brew install --cask TheBoredTeam/boring-notch/boring-notch</code></li>
+                <li><span class="app-name">Ice</span><code class="app-cmd">brew install --cask jordanbaird-ice</code></li>
+                <li><span class="app-name">nvm</span><code class="app-cmd">brew install nvm</code></li>
+                <li><span class="app-name">Java</span><code class="app-cmd">brew install java</code></li>
+                <li><span class="app-name">Python</span><code class="app-cmd">brew install python</code></li>
+                <li><span class="app-name">Fira Code</span><code class="app-cmd">brew install --cask font-fira-code</code></li>
+              </ul>
+
+              <h3 class="config-h3">App Store apps</h3>
+              <p class="config-p">Two apps only exist on the App Store, so <code class="inline-code">mas</code> handles them.</p>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy App Store commands">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="App Store apps"><code>mas install 441258766   # Magnet
 mas install 497799835   # Xcode</code></pre>
+              </div>
 
-          <h3 class="config-h3">Shell</h3>
-          <pre class="code" tabindex="0" role="region" aria-label="Oh My Zsh installation"><code>sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</code></pre>
-          <p class="config-p">Oh My Zsh with the <code class="inline-code">robbyrussell</code> theme and the <code class="inline-code">git</code> plugin. Screenshots save to a folder of my choosing, set once in the Screenshot app options.</p>
-        </div>
-      </section>
+              <h3 class="config-h3">Shell</h3>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy Oh My Zsh installation command">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="Oh My Zsh installation"><code>sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</code></pre>
+              </div>
+              <p class="config-p">Oh My Zsh with the <code class="inline-code">robbyrussell</code> theme and the <code class="inline-code">git</code> plugin. Screenshots save to a folder of my choosing, set once in the Screenshot app options.</p>
+            </div>
+          </section>
 
-      <section id="windows" class="config-section reveal" aria-labelledby="windows-title">
-        <div class="config-side">
-          <p class="step-n" aria-hidden="true">02</p>
-          <h2 id="windows-title">Windows</h2>
-          <p class="config-note">winget ships with Windows, so there is nothing to install first. WSL for anything that expects a Unix shell.</p>
-        </div>
-        <div class="config-body">
-          <h3 class="config-h3">Package manager</h3>
-          <p class="config-p">winget is part of the App Installer on Windows 10 and 11.</p>
-          <pre class="code" tabindex="0" role="region" aria-label="winget commands"><code>winget upgrade --all
+          <section id="windows" class="config-section reveal" aria-labelledby="windows-title">
+            <div class="config-side">
+              <p class="step-n" aria-hidden="true">02</p>
+              <h2 id="windows-title">Windows</h2>
+              <p class="config-note">winget ships with Windows, so there is nothing to install first. WSL for anything that expects a Unix shell.</p>
+            </div>
+            <div class="config-body">
+              <h3 class="config-h3">Package manager</h3>
+              <p class="config-p">winget is part of the App Installer on Windows 10 and 11.</p>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy winget check commands">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="winget commands"><code>winget upgrade --all
 winget search vivaldi   # confirm the current ID before installing</code></pre>
+              </div>
 
-          <h3 class="config-h3">Install the set</h3>
-          <ul class="app-list">
-            <li><span class="app-name">Vivaldi</span><code class="app-cmd">winget install --id Vivaldi.Vivaldi -e</code></li>
-            <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">winget install --id Microsoft.VisualStudioCode -e</code></li>
-            <li><span class="app-name">Discord</span><code class="app-cmd">winget install --id Discord.Discord -e</code></li>
-            <li><span class="app-name">Slack</span><code class="app-cmd">winget install --id SlackTechnologies.Slack -e</code></li>
-            <li><span class="app-name">Spotify</span><code class="app-cmd">winget install --id Spotify.Spotify -e</code></li>
-            <li><span class="app-name">qBittorrent</span><code class="app-cmd">winget install --id qBittorrent.qBittorrent -e</code></li>
-            <li><span class="app-name">Bitwarden</span><code class="app-cmd">winget install --id Bitwarden.Bitwarden -e</code></li>
-            <li><span class="app-name">Figma</span><code class="app-cmd">winget install --id Figma.Figma -e</code></li>
-            <li><span class="app-name">GitKraken</span><code class="app-cmd">winget install --id GitKraken.GitKraken -e</code></li>
-            <li><span class="app-name">Android Studio</span><code class="app-cmd">winget install --id Google.AndroidStudio -e</code></li>
-            <li><span class="app-name">Git</span><code class="app-cmd">winget install --id Git.Git -e</code></li>
-          </ul>
-          <p class="config-p">IDs get republished as packages move, so <code class="inline-code">winget search &lt;name&gt;</code> is the tie-breaker when an install line stops matching. VPN clients are best installed from their own site.</p>
+              <h3 class="config-h3">Install everything</h3>
+              <p class="config-p">Batch command to install all applications consecutively in PowerShell or Windows Terminal:</p>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy all Windows winget commands">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="All Windows winget packages"><code>winget install --id Vivaldi.Vivaldi -e --accept-package-agreements --accept-source-agreements; `
+winget install --id Microsoft.VisualStudioCode -e; `
+winget install --id Discord.Discord -e; `
+winget install --id SlackTechnologies.Slack -e; `
+winget install --id Spotify.Spotify -e; `
+winget install --id qBittorrent.qBittorrent -e; `
+winget install --id Bitwarden.Bitwarden -e; `
+winget install --id Figma.Figma -e; `
+winget install --id GitKraken.GitKraken -e; `
+winget install --id Google.AndroidStudio -e; `
+winget install --id Git.Git -e</code></pre>
+              </div>
 
-          <h3 class="config-h3">WSL</h3>
-          <pre class="code" tabindex="0" role="region" aria-label="WSL installation"><code>wsl --install
+              <h3 class="config-h3">Install the set (individual commands)</h3>
+              <ul class="app-list">
+                <li><span class="app-name">Vivaldi</span><code class="app-cmd">winget install --id Vivaldi.Vivaldi -e</code></li>
+                <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">winget install --id Microsoft.VisualStudioCode -e</code></li>
+                <li><span class="app-name">Discord</span><code class="app-cmd">winget install --id Discord.Discord -e</code></li>
+                <li><span class="app-name">Slack</span><code class="app-cmd">winget install --id SlackTechnologies.Slack -e</code></li>
+                <li><span class="app-name">Spotify</span><code class="app-cmd">winget install --id Spotify.Spotify -e</code></li>
+                <li><span class="app-name">qBittorrent</span><code class="app-cmd">winget install --id qBittorrent.qBittorrent -e</code></li>
+                <li><span class="app-name">Bitwarden</span><code class="app-cmd">winget install --id Bitwarden.Bitwarden -e</code></li>
+                <li><span class="app-name">Figma</span><code class="app-cmd">winget install --id Figma.Figma -e</code></li>
+                <li><span class="app-name">GitKraken</span><code class="app-cmd">winget install --id GitKraken.GitKraken -e</code></li>
+                <li><span class="app-name">Android Studio</span><code class="app-cmd">winget install --id Google.AndroidStudio -e</code></li>
+                <li><span class="app-name">Git</span><code class="app-cmd">winget install --id Git.Git -e</code></li>
+              </ul>
+              <p class="config-p">IDs get republished as packages move, so <code class="inline-code">winget search &lt;name&gt;</code> is the tie-breaker when an install line stops matching. VPN clients are best installed from their own site.</p>
+
+              <h3 class="config-h3">WSL</h3>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy WSL installation commands">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="WSL installation"><code>wsl --install
 wsl --set-default-version 2</code></pre>
-          <p class="config-p">Once WSL is up, the Linux list below applies inside it.</p>
-        </div>
-      </section>
+              </div>
+              <p class="config-p">Once WSL is up, the Linux list below applies inside it.</p>
+            </div>
+          </section>
 
-      <section id="linux" class="config-section reveal" aria-labelledby="linux-title">
-        <div class="config-side">
-          <p class="step-n" aria-hidden="true">03</p>
-          <h2 id="linux-title">Linux</h2>
-          <p class="config-note">Debian and Ubuntu with Flatpak for the graphical apps. Other distributions swap apt for dnf or pacman.</p>
-        </div>
-        <div class="config-body">
-          <h3 class="config-h3">Base system</h3>
-          <pre class="code" tabindex="0" role="region" aria-label="Base packages"><code>sudo apt update &amp;&amp; sudo apt upgrade -y
+          <section id="linux" class="config-section reveal" aria-labelledby="linux-title">
+            <div class="config-side">
+              <p class="step-n" aria-hidden="true">03</p>
+              <h2 id="linux-title">Linux</h2>
+              <p class="config-note">Debian and Ubuntu with Flatpak for the graphical apps. Other distributions swap apt for dnf or pacman.</p>
+            </div>
+            <div class="config-body">
+              <h3 class="config-h3">Base system</h3>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy Linux base packages commands">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="Base packages"><code>sudo apt update &amp;&amp; sudo apt upgrade -y
 sudo apt install -y git curl jq build-essential</code></pre>
+              </div>
 
-          <h3 class="config-h3">Flatpak</h3>
-          <pre class="code" tabindex="0" role="region" aria-label="Flatpak setup"><code>sudo apt install -y flatpak
+              <h3 class="config-h3">Flatpak setup &amp; apps (all in one)</h3>
+              <p class="config-p">Set up Flatpak, add Flathub, and install all graphical applications:</p>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy all Linux flatpak commands">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="All Linux flatpak setup and apps"><code>sudo apt install -y flatpak && \
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && \
+flatpak install -y flathub \
+  com.vivaldi.Vivaldi \
+  com.visualstudio.code \
+  com.discordapp.Discord \
+  com.slack.Slack \
+  com.spotify.Client \
+  org.qbittorrent.qBittorrent \
+  com.bitwarden.desktop</code></pre>
+              </div>
+
+              <h3 class="config-h3">Flatpak</h3>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy Flatpak setup command">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="Flatpak setup"><code>sudo apt install -y flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></pre>
+              </div>
 
-          <h3 class="config-h3">Graphical apps</h3>
-          <ul class="app-list">
-            <li><span class="app-name">Vivaldi</span><code class="app-cmd">flatpak install flathub com.vivaldi.Vivaldi</code></li>
-            <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">flatpak install flathub com.visualstudio.code</code></li>
-            <li><span class="app-name">Discord</span><code class="app-cmd">flatpak install flathub com.discordapp.Discord</code></li>
-            <li><span class="app-name">Slack</span><code class="app-cmd">flatpak install flathub com.slack.Slack</code></li>
-            <li><span class="app-name">Spotify</span><code class="app-cmd">flatpak install flathub com.spotify.Client</code></li>
-            <li><span class="app-name">qBittorrent</span><code class="app-cmd">flatpak install flathub org.qbittorrent.qBittorrent</code></li>
-            <li><span class="app-name">Bitwarden</span><code class="app-cmd">flatpak install flathub com.bitwarden.desktop</code></li>
-          </ul>
-          <p class="config-p">Snap is the alternative where a package is not on Flathub: <code class="inline-code">sudo snap install code --classic</code>.</p>
+              <h3 class="config-h3">Graphical apps (individual commands)</h3>
+              <ul class="app-list">
+                <li><span class="app-name">Vivaldi</span><code class="app-cmd">flatpak install flathub com.vivaldi.Vivaldi</code></li>
+                <li><span class="app-name">Visual Studio Code</span><code class="app-cmd">flatpak install flathub com.visualstudio.code</code></li>
+                <li><span class="app-name">Discord</span><code class="app-cmd">flatpak install flathub com.discordapp.Discord</code></li>
+                <li><span class="app-name">Slack</span><code class="app-cmd">flatpak install flathub com.slack.Slack</code></li>
+                <li><span class="app-name">Spotify</span><code class="app-cmd">flatpak install flathub com.spotify.Client</code></li>
+                <li><span class="app-name">qBittorrent</span><code class="app-cmd">flatpak install flathub org.qbittorrent.qBittorrent</code></li>
+                <li><span class="app-name">Bitwarden</span><code class="app-cmd">flatpak install flathub com.bitwarden.desktop</code></li>
+              </ul>
+              <p class="config-p">Snap is the alternative where a package is not on Flathub: <code class="inline-code">sudo snap install code --classic</code>.</p>
 
-          <h3 class="config-h3">Shell</h3>
-          <pre class="code" tabindex="0" role="region" aria-label="Shell installation"><code>sudo apt install -y zsh
+              <h3 class="config-h3">Shell</h3>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" aria-label="Copy Linux shell commands">Copy</button>
+                <pre class="code" tabindex="0" role="region" aria-label="Shell installation"><code>sudo apt install -y zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</code></pre>
-        </div>
-      </section>
+              </div>
+            </div>
+          </section>
 
       <section id="agents" class="config-section reveal" aria-labelledby="agents-title">
         <div class="config-side">
@@ -216,7 +299,9 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
           <article class="settings-card">
             <h3 class="config-h3">Antigravity CLI</h3>
             <p class="setting-file"><code>~/.gemini/antigravity-cli/settings.json</code></p>
-            <pre class="code" tabindex="0" role="region" aria-label="Antigravity CLI settings"><code>{
+            <div class="code-wrap">
+              <button class="copy-btn" type="button" aria-label="Copy Antigravity CLI settings">Copy</button>
+              <pre class="code" tabindex="0" role="region" aria-label="Antigravity CLI settings"><code>{
   "agentMode": "accept-edits",
   "colorScheme": "dark",
   "permissions": {
@@ -260,13 +345,16 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
   "toolPermission": "always-proceed",
   "verbosity": "low"
 }</code></pre>
+            </div>
             <p class="config-p">The status line reads the session JSON from stdin, so a small shell script can print the directory, branch, model, context used and remaining quota in one line.</p>
           </article>
 
           <article class="settings-card">
             <h3 class="config-h3">opencode</h3>
             <p class="setting-file"><code>~/.config/opencode/opencode.jsonc</code></p>
-            <pre class="code" tabindex="0" role="region" aria-label="opencode settings"><code>{
+            <div class="code-wrap">
+              <button class="copy-btn" type="button" aria-label="Copy opencode settings">Copy</button>
+              <pre class="code" tabindex="0" role="region" aria-label="opencode settings"><code>{
   "$schema": "https://opencode.ai/config.json",
   "permission": {
     "bash": {
@@ -289,23 +377,29 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
     }
   }
 }</code></pre>
+            </div>
             <p class="config-p">Everything unmatched falls back to <code class="inline-code">ask</code>, so a new command is a confirmation rather than a surprise. Terminal scrolling lives in <code class="inline-code">~/.config/opencode/tui.json</code>.</p>
           </article>
 
           <article class="settings-card">
             <h3 class="config-h3">Freebuff</h3>
             <p class="setting-file"><code>~/.config/manicode/settings.json</code></p>
-            <pre class="code" tabindex="0" role="region" aria-label="Freebuff settings"><code>{
+            <div class="code-wrap">
+              <button class="copy-btn" type="button" aria-label="Copy Freebuff settings">Copy</button>
+              <pre class="code" tabindex="0" role="region" aria-label="Freebuff settings"><code>{
   "mode": "DEFAULT",
   "adsEnabled": true,
   "freebuffCatalogReasoningEfforts": {
     "m-096e75164d": "high"
   }
 }</code></pre>
+            </div>
             <p class="config-p">Freebuff keeps its choices in a single settings file: the approval mode, whether ads are shown, the selected model key and per-model reasoning effort. Command approval happens in the session itself, so there is no allow and deny list to maintain. <span class="provenance">Keys as observed on my machine.</span></p>
           </article>
         </div>
       </section>
+        </div>
+      </div>
     </main>
 
     <footer class="site-footer">

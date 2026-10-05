@@ -72,3 +72,41 @@ if (canvas) {
   else if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 600 });
   else setTimeout(start, 60);
 }
+
+// Config page: quick-copy commands and active navigation tracking ------------
+document.querySelectorAll('.copy-btn').forEach(button => {
+  button.addEventListener('click', async () => {
+    const wrap = button.closest('.code-wrap');
+    const code = wrap?.querySelector('pre code')?.innerText || '';
+    if (!code) return;
+    try {
+      await navigator.clipboard.writeText(code);
+      const originalText = button.textContent;
+      button.textContent = 'Copied';
+      button.classList.add('is-copied');
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('is-copied');
+      }, 1800);
+    } catch (_) {
+      /* clipboard write may fail in restricted permissions */
+    }
+  });
+});
+
+const configSections = document.querySelectorAll('.config-section');
+const configNavLinks = document.querySelectorAll('.config-nav a');
+if (configSections.length && configNavLinks.length && 'IntersectionObserver' in window) {
+  const activeObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        configNavLinks.forEach(link => {
+          link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+        });
+      }
+    }
+  }, { threshold: 0.2, rootMargin: '-10% 0px -60% 0px' });
+  configSections.forEach(section => activeObserver.observe(section));
+}
+

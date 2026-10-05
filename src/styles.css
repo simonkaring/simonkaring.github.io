@@ -267,9 +267,25 @@ main, .site-footer { position: relative; z-index: 1; }
 .config-hero { max-width: 52rem; margin-top: 2.5rem; }
 .config-hero h1 { font-weight: 600; font-size: clamp(3rem, 9vw, 7rem); line-height: 0.95; letter-spacing: -0.055em; margin: 1.5rem 0 1.75rem; }
 .config-lede { max-width: 40rem; font-size: clamp(1.0625rem, 1.4vw, 1.3rem); line-height: 1.45; letter-spacing: -0.01em; color: var(--muted); }
-.config-nav { display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.5rem); margin-top: clamp(2.5rem, 7vh, 4rem); padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 500 0.8125rem/1 var(--mono); }
-.config-nav a { text-decoration: none; color: var(--muted); }
+
+.config-layout { display: block; margin-top: clamp(2.5rem, 7vh, 4rem); }
+.config-nav { display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.5rem); padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 500 0.8125rem/1 var(--mono); transition: background 0.3s var(--ease-out); }
+.config-nav a { text-decoration: none; color: var(--muted); transition: color 0.2s var(--ease-out); }
 .config-nav a:hover, .config-nav a:focus-visible { color: var(--accent); }
+.config-nav a.is-active { color: var(--accent); }
+
+@media (min-width: 1024px) {
+  .config-layout { display: grid; grid-template-columns: 10rem minmax(0, 1fr); column-gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
+  .config-nav { position: sticky; top: 5.5rem; flex-direction: column; align-items: flex-start; gap: 1.25rem; border-bottom: 0; padding: 1.5rem 0; }
+  .config-nav a { padding-left: 0.6rem; border-left: 2px solid transparent; }
+  .config-nav a:hover, .config-nav a:focus-visible { border-left-color: var(--line); }
+  .config-nav a.is-active { border-left-color: var(--accent); color: var(--ink); }
+}
+
+@media (max-width: 1023px) {
+  .config-nav { position: sticky; top: 4.25rem; z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+}
+
 .config-section { display: grid; grid-template-columns: 14rem minmax(0, 1fr); column-gap: clamp(2rem, 6vw, 5rem); row-gap: 1.5rem; padding: clamp(3.5rem, 9vh, 6rem) 0; border-bottom: 1px solid var(--line); }
 .config-side { position: sticky; top: 6rem; align-self: start; }
 .config-side h2 { font-weight: 600; font-size: clamp(1.75rem, 2.8vw, 2.75rem); line-height: 1; letter-spacing: -0.04em; margin: 0; }
@@ -279,7 +295,13 @@ main, .site-footer { position: relative; z-index: 1; }
 .config-body > .config-h3:first-child, .rule-card .config-h3, .settings-card .config-h3 { margin-top: 0; }
 .config-p { font-size: 1rem; line-height: 1.55; color: var(--muted); max-width: 44rem; }
 .inline-code { font: 500 0.875em/1 var(--mono); color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); padding: 0.15em 0.4em; border-radius: 2px; }
-.code { margin: 0; padding: 1rem 1.15rem; border: 1px solid var(--line); background: color-mix(in srgb, var(--ink) 5%, var(--bg)); overflow-x: auto; font: 500 0.8125rem/1.6 var(--mono); color: var(--ink); tab-size: 2; }
+
+.code-wrap { position: relative; min-width: 0; max-width: 100%; }
+.copy-btn { position: absolute; top: 0.6rem; right: 0.6rem; padding: 0.3rem 0.65rem; border: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 85%, transparent); color: var(--muted); font: 500 0.6875rem/1 var(--mono); text-transform: uppercase; letter-spacing: 0.05em; border-radius: 2px; cursor: pointer; transition: color 0.15s, border-color 0.15s, background-color 0.15s; }
+.copy-btn:hover, .copy-btn:focus-visible { color: var(--ink); border-color: var(--accent); }
+.copy-btn.is-copied { color: var(--accent); border-color: var(--accent); }
+
+.code { margin: 0; padding: 1rem 1.15rem; border: 1px solid var(--line); background: color-mix(in srgb, var(--ink) 5%, var(--bg)); overflow-x: auto; max-width: 100%; min-width: 0; font: 500 0.8125rem/1.6 var(--mono); color: var(--ink); tab-size: 2; }
 .code code { font: inherit; }
 .app-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
 .app-list li { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); align-items: baseline; column-gap: 1.25rem; padding: 0.7rem 0; border-top: 1px solid var(--line); }
