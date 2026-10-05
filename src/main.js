@@ -94,8 +94,23 @@ document.querySelectorAll('.copy-btn').forEach(button => {
   });
 });
 
+const configNav = document.querySelector('.config-nav');
 const configSections = document.querySelectorAll('.config-section');
 const configNavLinks = document.querySelectorAll('.config-nav a');
+
+if (configNav) {
+  // Toggle vertical / sticky navigation when scrolling down past the initial nav position
+  const navSentinel = document.createElement('div');
+  navSentinel.className = 'config-nav-sentinel';
+  navSentinel.style.cssText = 'position: absolute; pointer-events: none; height: 1px; width: 1px;';
+  configNav.before(navSentinel);
+
+  const navObserver = new IntersectionObserver(([entry]) => {
+    configNav.classList.toggle('is-floating', !entry.isIntersecting);
+  }, { threshold: 0, rootMargin: '-68px 0px 0px 0px' });
+  navObserver.observe(navSentinel);
+}
+
 if (configSections.length && configNavLinks.length && 'IntersectionObserver' in window) {
   const activeObserver = new IntersectionObserver(entries => {
     for (const entry of entries) {
@@ -109,4 +124,5 @@ if (configSections.length && configNavLinks.length && 'IntersectionObserver' in 
   }, { threshold: 0.2, rootMargin: '-10% 0px -60% 0px' });
   configSections.forEach(section => activeObserver.observe(section));
 }
+
 

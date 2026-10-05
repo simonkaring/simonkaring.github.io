@@ -268,22 +268,25 @@ main, .site-footer { position: relative; z-index: 1; }
 .config-hero h1 { font-weight: 600; font-size: clamp(3rem, 9vw, 7rem); line-height: 0.95; letter-spacing: -0.055em; margin: 1.5rem 0 1.75rem; }
 .config-lede { max-width: 40rem; font-size: clamp(1.0625rem, 1.4vw, 1.3rem); line-height: 1.45; letter-spacing: -0.01em; color: var(--muted); }
 
-.config-layout { display: block; margin-top: clamp(2.5rem, 7vh, 4rem); }
-.config-nav { display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.5rem); padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 500 0.8125rem/1 var(--mono); transition: background 0.3s var(--ease-out); }
+.config-nav { display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.5rem); margin-top: clamp(2.5rem, 7vh, 4rem); padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 500 0.8125rem/1 var(--mono); transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out), background 0.3s var(--ease-out); }
 .config-nav a { text-decoration: none; color: var(--muted); transition: color 0.2s var(--ease-out); }
 .config-nav a:hover, .config-nav a:focus-visible { color: var(--accent); }
 .config-nav a.is-active { color: var(--accent); }
 
 @media (min-width: 1024px) {
-  .config-layout { display: grid; grid-template-columns: 10rem minmax(0, 1fr); column-gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
-  .config-nav { position: sticky; top: 5.5rem; flex-direction: column; align-items: flex-start; gap: 1.25rem; border-bottom: 0; padding: 1.5rem 0; }
-  .config-nav a { padding-left: 0.6rem; border-left: 2px solid transparent; }
-  .config-nav a:hover, .config-nav a:focus-visible { border-left-color: var(--line); }
-  .config-nav a.is-active { border-left-color: var(--accent); color: var(--ink); }
+  .config-nav.is-floating { position: fixed; top: 6.5rem; left: max(1.5rem, calc((100vw - 76rem) / 2 + 1.5rem)); z-index: 15; flex-direction: column; align-items: flex-start; gap: 1rem; width: auto; margin-top: 0; padding: 1.25rem 1.4rem; background: color-mix(in srgb, var(--bg) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 12px 36px rgb(0 0 0 / 0.25); animation: navFadeIn 0.25s var(--ease-out); }
+  .config-nav.is-floating a { padding-left: 0.6rem; border-left: 2px solid transparent; }
+  .config-nav.is-floating a:hover, .config-nav.is-floating a:focus-visible { border-left-color: var(--line); }
+  .config-nav.is-floating a.is-active { border-left-color: var(--accent); color: var(--ink); }
+}
+
+@keyframes navFadeIn {
+  from { opacity: 0; transform: translateY(-0.5rem); }
+  to { opacity: 1; transform: none; }
 }
 
 @media (max-width: 1023px) {
-  .config-nav { position: sticky; top: 4.25rem; z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .config-nav.is-floating { position: sticky; top: 4.25rem; z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 }
 
 .config-section { display: grid; grid-template-columns: 14rem minmax(0, 1fr); column-gap: clamp(2rem, 6vw, 5rem); row-gap: 1.5rem; padding: clamp(3.5rem, 9vh, 6rem) 0; border-bottom: 1px solid var(--line); }
