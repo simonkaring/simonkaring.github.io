@@ -761,8 +761,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
                   aria-label="opencode settings"
                 ><code>{
   "$schema": "https://opencode.ai/config.json",
-  "permission": {
-    "agent": {
+  "agent": {
     "openai/gpt-6-astra": {
       "description": "Use for complex feature implementation, cross-cutting refactors, and tasks requiring coordinated changes across multiple files. Uses OpenAI GPT-6 Astra.",
       "mode": "subagent",
@@ -824,6 +823,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
       "model": "azure/claude-haiku-4-5",
     },
   },
+  "permission": {
     "bash": {
       "*": "ask",
       "git status": "allow",

@@ -1,89 +1,283 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="dark light">
-    <meta name="theme-color" content="#0c0d0f">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <meta
+      name="color-scheme"
+      content="dark light"
+    />
+    <meta
+      name="theme-color"
+      content="#0c0d0f"
+    />
     <title>Simon Karing · Software engineer</title>
-    <meta name="description" content="Software engineer turning real business problems into practical, maintainable software.">
-    <link rel="canonical" href="https://simonkaring.github.io/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Simon Karing · Software engineer">
-    <meta property="og:description" content="Software engineer turning real business problems into practical, maintainable software.">
-    <meta property="og:url" content="https://simonkaring.github.io/">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta
+      name="description"
+      content="Software engineer turning real business problems into practical, maintainable software."
+    />
+    <link
+      rel="canonical"
+      href="https://simonkaring.github.io/"
+    />
+    <meta
+      property="og:type"
+      content="website"
+    />
+    <meta
+      property="og:title"
+      content="Simon Karing · Software engineer"
+    />
+    <meta
+      property="og:description"
+      content="Software engineer turning real business problems into practical, maintainable software."
+    />
+    <meta
+      property="og:url"
+      content="https://simonkaring.github.io/"
+    />
+    <link
+      rel="icon"
+      href="/favicon.svg"
+      type="image/svg+xml"
+    />
     <script>
-      try { const t = localStorage.getItem('sk-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (_) {}
-      document.documentElement.classList.add('js');
+      try {
+        const t = localStorage.getItem("sk-theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (_) {}
+      document.documentElement.classList.add("js");
     </script>
-    <script type="module" src="/src/main.js"></script>
+    <script
+      type="module"
+      src="/src/main.js"
+    ></script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <canvas class="network-canvas" data-network aria-hidden="true"></canvas>
+    <a
+      class="skip-link"
+      href="#main"
+    >
+      Skip to content
+    </a>
+    <canvas
+      class="network-canvas"
+      data-network
+      aria-hidden="true"
+    ></canvas>
 
     <header class="site-header">
-      <a class="mark" href="/" aria-label="Simon Karing, home">sk<span aria-hidden="true">/</span></a>
+      <a
+        class="mark"
+        href="/"
+        aria-label="Simon Karing, home"
+      >
+        sk
+        <span aria-hidden="true">/</span>
+      </a>
       <nav aria-label="Main">
         <a href="#work">Work</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        <button class="theme-toggle" type="button" hidden><span class="theme-dot" aria-hidden="true"></span><span data-theme-label>Light</span></button>
+        <button
+          class="theme-toggle"
+          type="button"
+          hidden
+        >
+          <span
+            class="theme-dot"
+            aria-hidden="true"
+          ></span>
+          <span data-theme-label>Light</span>
+        </button>
       </nav>
     </header>
 
     <main id="main">
-      <section class="hero" aria-labelledby="hero-title">
-        <h1 id="hero-title" class="hero-name" data-name>
+      <section
+        class="hero"
+        aria-labelledby="hero-title"
+      >
+        <h1
+          id="hero-title"
+          class="hero-name"
+          data-name
+        >
           <span class="name-line">Simon</span>
           <span class="name-line name-line--offset">Karing</span>
         </h1>
         <div class="hero-foot">
-          <p class="hero-lede">Software engineer turning real business problems into practical, maintainable software.</p>
-          <a class="scroll-cue" href="#about"><span class="scroll-cue-line" aria-hidden="true"></span>Scroll to explore</a>
+          <p class="hero-lede">
+            Software engineer turning real business problems into practical, maintainable software.
+          </p>
+          <a
+            class="scroll-cue"
+            href="#about"
+          >
+            <span
+              class="scroll-cue-line"
+              aria-hidden="true"
+            ></span>
+            Scroll to explore
+          </a>
         </div>
       </section>
 
-      <section id="about" class="about" aria-labelledby="about-title">
+      <section
+        id="about"
+        class="about"
+        aria-labelledby="about-title"
+      >
         <div class="about-intro reveal">
-          <p class="index-label" aria-hidden="true">01</p>
-          <h2 id="about-title">Ownership of the problem. <em>From the first conversation to production.</em></h2>
+          <p
+            class="index-label"
+            aria-hidden="true"
+          >
+            01
+          </p>
+          <h2 id="about-title">
+            Ownership of the problem.
+            <em>From the first conversation to production to maintenance.</em>
+          </h2>
         </div>
 
-        <ol class="lifecycle reveal" aria-label="How I work across the development lifecycle">
-          <li><span class="step-n" aria-hidden="true">01</span>Users &amp; requirements</li>
-          <li><span class="step-n" aria-hidden="true">02</span>Architecture</li>
-          <li><span class="step-n" aria-hidden="true">03</span>Data models &amp; APIs</li>
-          <li><span class="step-n" aria-hidden="true">04</span>Frontend &amp; backend</li>
-          <li><span class="step-n" aria-hidden="true">05</span>Cloud deployment</li>
-          <li><span class="step-n" aria-hidden="true">06</span>Production</li>
+        <ol
+          class="lifecycle reveal"
+          aria-label="How I work across the development lifecycle"
+        >
+          <li>
+            <span
+              class="step-n"
+              aria-hidden="true"
+            >
+              01
+            </span>
+            Users &amp; requirements
+          </li>
+          <li>
+            <span
+              class="step-n"
+              aria-hidden="true"
+            >
+              02
+            </span>
+            Architecture
+          </li>
+          <li>
+            <span
+              class="step-n"
+              aria-hidden="true"
+            >
+              03
+            </span>
+            Data models &amp; APIs
+          </li>
+          <li>
+            <span
+              class="step-n"
+              aria-hidden="true"
+            >
+              04
+            </span>
+            Frontend &amp; backend
+          </li>
+          <li>
+            <span
+              class="step-n"
+              aria-hidden="true"
+            >
+              05
+            </span>
+            Cloud deployment
+          </li>
+          <li>
+            <span
+              class="step-n"
+              aria-hidden="true"
+            >
+              06
+            </span>
+            Production
+          </li>
         </ol>
 
         <div class="about-body reveal">
-          <p>I enjoy understanding why something needs to be built, making the technical decisions behind it, and taking responsibility for getting it into the hands of users.</p>
-          <p class="stack-line">Full-stack development, cloud architecture, databases, APIs, authentication, CI/CD and production operations. Primarily within Microsoft Azure.</p>
+          <p>
+            I enjoy understanding why something needs to be built, making the technical decisions
+            behind it, and taking responsibility for getting it into the hands of users.
+          </p>
+          <p class="stack-line">
+            Full-stack development, cloud architecture, databases, APIs, authentication, CI/CD and
+            production operations. Primarily within Microsoft Azure.
+          </p>
         </div>
       </section>
 
-      <section id="work" class="work" aria-labelledby="work-title">
+      <section
+        id="work"
+        class="work"
+        aria-labelledby="work-title"
+      >
         <div class="work-head reveal">
-          <p class="index-label" aria-hidden="true">02</p>
-          <h2 id="work-title">Nine systems. <em>Each one a cluster in the network behind this page.</em></h2>
+          <p
+            class="index-label"
+            aria-hidden="true"
+          >
+            02
+          </p>
+          <h2 id="work-title">
+            Nine systems to showcase.
+            <em>Each one a cluster in the network behind this page.</em>
+          </h2>
         </div>
         <!--work-list-->
       </section>
 
-      <section class="ai" aria-labelledby="ai-title">
-        <h2 id="ai-title" class="reveal">How AI is changing <em>software engineering.</em></h2>
-        <p class="reveal">I actively evaluate new models, coding agents and AI-assisted development workflows, and explore how they can make software teams faster without compromising engineering quality.</p>
+      <section
+        class="ai"
+        aria-labelledby="ai-title"
+      >
+        <h2
+          id="ai-title"
+          class="reveal"
+        >
+          How AI is changing
+          <em>software engineering.</em>
+        </h2>
+        <p class="reveal">
+          I actively evaluate new models, coding agents and AI-assisted development workflows, and
+          explore how they can make software teams faster without compromising engineering quality.
+        </p>
       </section>
 
-      <section id="contact" class="contact" aria-labelledby="contact-title">
-        <h2 id="contact-title" class="visually-hidden">Contact</h2>
-        <a class="contact-link reveal" href="https://github.com/simonkaring">
+      <section
+        id="contact"
+        class="contact"
+        aria-labelledby="contact-title"
+      >
+        <h2
+          id="contact-title"
+          class="visually-hidden"
+        >
+          Contact
+        </h2>
+        <a
+          class="contact-link reveal"
+          href="https://github.com/simonkaring"
+        >
           <span class="contact-kicker">Find me on</span>
-          <span class="contact-word">GitHub<span class="contact-arrow" aria-hidden="true">↗</span></span>
+          <span class="contact-word">
+            GitHub
+            <span
+              class="contact-arrow"
+              aria-hidden="true"
+            >
+              ↗
+            </span>
+          </span>
         </a>
       </section>
     </main>
