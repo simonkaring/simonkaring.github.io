@@ -35,7 +35,7 @@ test('content, responsive layout and local routes', async ({ page, request }, te
   const localLinks = await page.locator('a[href^="/"]').evaluateAll(links => [...new Set(links.map(link => link.getAttribute('href').split('#')[0]))]);
   for (const link of localLinks) expect((await request.get(link || '/')).ok(), link).toBe(true);
   await page.goto('/config/');
-  await expect(page.getByRole('heading', { level: 1, name: /Fresh machine/ })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'My boring config.' })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
@@ -131,7 +131,7 @@ test('case study pages render, fit and are accessible', async ({ page }) => {
 
 test('config page renders, fits and is accessible', async ({ page }, testInfo) => {
   await page.goto('/config/');
-  await expect(page.getByRole('heading', { level: 1, name: /Fresh machine/ })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'My boring config.' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'macOS' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Windows' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Linux' })).toBeVisible();
@@ -144,17 +144,18 @@ test('config page renders, fits and is accessible', async ({ page }, testInfo) =
   }
   const nav = page.getByRole('navigation', { name: 'On this page' });
   await nav.getByRole('link', { name: 'Linux', exact: true }).click();
-  await expect(nav).toHaveClass(/is-docked/);
-  await expect(nav.locator('.config-nav-inner')).toHaveCSS('position', 'fixed');
+  await expect(nav).toHaveCSS('position', 'sticky');
   await expect(nav.locator('.config-nav-inner')).toHaveCSS('writing-mode', 'horizontal-tb');
-  await expect(nav.locator('.config-nav-inner')).toHaveCSS('flex-direction', 'column');
+  await expect(nav.locator('.config-nav-inner')).toHaveCSS('flex-direction', 'row');
+  await expect.poll(() => nav.evaluate(element => Math.round(element.getBoundingClientRect().top))).toBe(68);
   await expect(nav.getByRole('link', { name: 'Linux', exact: true })).toHaveClass(/is-active/);
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(nav).toHaveCSS('position', 'sticky');
   await expect(nav.locator('.config-nav-inner')).toHaveCSS('writing-mode', 'horizontal-tb');
+  await expect(nav.locator('.config-nav-inner')).toHaveCSS('flex-direction', 'row');
+  await expect.poll(() => nav.evaluate(element => Math.round(element.getBoundingClientRect().top))).toBe(68);
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
-  await expect(nav).not.toHaveClass(/is-docked/);
   await expect(nav.locator('.config-nav-inner')).toHaveCSS('position', 'static');
   await page.setViewportSize(testInfo.project.use.viewport || { width: 390, height: 844 });
   await expectAccessibleInBothThemes(page, '/config/');

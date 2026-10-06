@@ -96,14 +96,6 @@ document.querySelectorAll('.copy-btn').forEach(button => {
 
 const configSections = document.querySelectorAll('.config-section');
 const configNavLinks = document.querySelectorAll('.config-nav a');
-const configNav = document.querySelector('.config-nav');
-
-if (configNav && 'IntersectionObserver' in window) {
-  const dockObserver = new IntersectionObserver(([entry]) => {
-    configNav.classList.toggle('is-docked', !entry.isIntersecting && entry.boundingClientRect.bottom <= 68);
-  }, { rootMargin: '-68px 0px 0px 0px' });
-  dockObserver.observe(configNav);
-}
 
 if (configSections.length && configNavLinks.length && 'IntersectionObserver' in window) {
   const activeObserver = new IntersectionObserver(entries => {
