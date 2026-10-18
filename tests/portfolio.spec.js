@@ -13,6 +13,7 @@ async function expectAccessibleInBothThemes(page, path) {
     }, theme);
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready);
+    await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
     const report = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(report.violations, `${path} ${theme}`).toEqual([]);
   }
@@ -149,6 +150,31 @@ test('config page renders, fits and is accessible', async ({ page }, testInfo) =
   await expect(nav.locator('.config-nav-inner')).toHaveCSS('flex-direction', 'row');
   await expect.poll(() => nav.evaluate(element => Math.round(element.getBoundingClientRect().top))).toBe(68);
   await expect(nav.getByRole('link', { name: 'Linux', exact: true })).toHaveClass(/is-active/);
+  await expect(nav.getByRole('link', { name: 'Linux', exact: true })).toHaveAttribute('aria-current', 'location');
+  await expect(nav.locator('a.is-active')).toHaveCount(1);
+  await expect(nav.locator('a[aria-current="location"]')).toHaveCount(1);
+
+  // Click Coding agents: verify immediate highlight, single active link, opacity 1, and clear of sticky nav
+  const agentsLink = nav.getByRole('link', { name: 'Coding agents', exact: true });
+  await agentsLink.click();
+  await expect(agentsLink).toHaveClass(/is-active/);
+  await expect(agentsLink).toHaveAttribute('aria-current', 'location');
+  await expect(nav.locator('a.is-active')).toHaveCount(1);
+  await expect(page.locator('#agents')).toHaveClass(/is-visible/);
+  await expect.poll(() => page.locator('#agents').evaluate(el => window.getComputedStyle(el).opacity)).toBe('1');
+  await expect.poll(() => page.locator('#agents-title').evaluate(el => el.getBoundingClientRect().top)).toBeGreaterThanOrEqual(68);
+
+  // Statusline code block and download link
+  await expect(page.locator('.code', { hasText: 'statusline.sh' })).not.toHaveCount(0);
+  await expect(page.locator('.code', { hasText: 'ponytail:' })).not.toHaveCount(0);
+  const downloadLink = page.locator('a[href="/statusline.sh"][download="statusline.sh"]');
+  await expect(downloadLink).toBeVisible();
+
+  // Verify direct script download
+  const res = await page.request.get('/statusline.sh');
+  expect(res.status()).toBe(200);
+  expect(await res.text()).toContain('ponytail: single jq invocation');
+
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(nav).toHaveCSS('position', 'sticky');
   await expect(nav.locator('.config-nav-inner')).toHaveCSS('writing-mode', 'horizontal-tb');
@@ -159,4 +185,56 @@ test('config page renders, fits and is accessible', async ({ page }, testInfo) =
   await expect(nav.locator('.config-nav-inner')).toHaveCSS('position', 'static');
   await page.setViewportSize(testInfo.project.use.viewport || { width: 390, height: 844 });
   await expectAccessibleInBothThemes(page, '/config/');
+});
+
+test('config page handles direct hash navigation to #agents', async ({ page }) => {
+  await page.goto('/config/#agents');
+  const nav = page.getByRole('navigation', { name: 'On this page' });
+  const agentsLink = nav.getByRole('link', { name: 'Coding agents', exact: true });
+  await expect(agentsLink).toHaveClass(/is-active/);
+  await expect(agentsLink).toHaveAttribute('aria-current', 'location');
+  await expect(nav.locator('a.is-active')).toHaveCount(1);
+  await expect(page.locator('#agents')).toHaveClass(/is-visible/);
+  await expect.poll(() => page.locator('#agents').evaluate(el => window.getComputedStyle(el).opacity)).toBe('1');
+  await expect.poll(() => page.locator('#agents').evaluate(el =>
+    Math.abs(el.getBoundingClientRect().top - parseFloat(getComputedStyle(el).scrollMarginTop))
+  )).toBeLessThanOrEqual(2);
+});
+
+test('statusline display and clipboard match the downloadable script exactly', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.copiedScript = null;
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: async text => { window.copiedScript = text; } },
+    });
+  });
+  await page.goto('/config/#agents');
+  const response = await page.request.get('/statusline.sh');
+  expect(response.ok()).toBe(true);
+  const script = await response.text();
+  expect(script).toMatch(/^#!\/bin\/sh\n/);
+  expect(script).toContain('sub("/+$"; "")');
+  const code = page.locator('pre[aria-label="Statusline script"] code');
+  expect(await code.textContent()).toBe(script);
+  await page.getByRole('button', { name: 'Copy statusline script', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => window.copiedScript)).toBe(script);
+});
+
+test('config navigation follows ordinary scrolling in both directions', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/config/');
+  await page.evaluate(() => document.fonts.ready);
+  const nav = page.getByRole('navigation', { name: 'On this page' });
+  for (const id of ['windows', 'linux', 'agents', 'linux', 'windows', 'macos']) {
+    await page.locator(`#${id}`).evaluate(el => {
+      window.scrollTo({
+        top: el.getBoundingClientRect().top + scrollY - parseFloat(getComputedStyle(el).scrollMarginTop),
+        behavior: 'instant',
+      });
+    });
+    await expect(nav.locator(`a[href="#${id}"]`)).toHaveAttribute('aria-current', 'location');
+    await expect(nav.locator('a.is-active')).toHaveCount(1);
+    await expect(page.locator(`#${id}`)).toHaveCSS('opacity', '1');
+  }
 });

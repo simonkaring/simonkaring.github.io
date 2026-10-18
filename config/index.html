@@ -737,9 +737,27 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
   "verbosity": "low"
 }</code></pre>
               </div>
+              <p class="setting-file"><code>~/.gemini/statusline.sh</code></p>
+              <div class="code-wrap">
+                <button
+                  class="copy-btn"
+                  type="button"
+                  aria-label="Copy statusline script"
+                >
+                  Copy
+                </button>
+                <pre
+                  class="code"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Statusline script"
+                ><code><!--statusline-sh--></code></pre>
+              </div>
               <p class="config-p">
-                The status line reads the session JSON from stdin, so a small shell script can
-                print the directory, branch, model, context used and remaining quota in one line.
+                The status line reads session JSON from stdin via <code class="inline-code">jq</code>,
+                formatting the project directory, git branch, model, context usage and available 5-hour
+                and weekly quota meters with reset countdowns across multiple lines. Also available for
+                download as <a class="config-inline-link" href="/statusline.sh" download="statusline.sh">statusline.sh</a>.
               </p>
             </article>
 
