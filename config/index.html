@@ -754,10 +754,19 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
                 ><code><!--statusline-sh--></code></pre>
               </div>
               <p class="config-p">
-                The status line reads session JSON from stdin via <code class="inline-code">jq</code>,
-                formatting the project directory, git branch, model, context usage and available 5-hour
-                and weekly quota meters with reset countdowns across multiple lines. Also available for
-                download as <a class="config-inline-link" href="/statusline.sh" download="statusline.sh">statusline.sh</a>.
+                The status line reads session JSON from stdin via
+                <code class="inline-code">jq</code>
+                , formatting the project directory, git branch, model, context usage and available
+                5-hour and weekly quota meters with reset countdowns across multiple lines. Also
+                available for download as
+                <a
+                  class="config-inline-link"
+                  href="/statusline.sh"
+                  download="statusline.sh"
+                >
+                  statusline.sh
+                </a>
+                .
               </p>
             </article>
 
@@ -780,7 +789,12 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
                 ><code>{
   "$schema": "https://opencode.ai/config.json",
   "agent": {
-    "openai/gpt-6-astra": {
+    "opencode/deepseek-v4.1-flash-free": {
+      "description": "Use for general coding tasks, bug fixes, and lightweight research. Uses DeepSeek V4.1 Flash Free through OpenCode.",
+      "mode": "subagent",
+      "model": "opencode/deepseek-v4.1-flash-free",
+    },
+    "openai/gpt-astra": {
       "description": "Use for complex feature implementation, cross-cutting refactors, and tasks requiring coordinated changes across multiple files. Uses OpenAI GPT-6 Astra.",
       "mode": "subagent",
       "model": "openai/gpt-6-astra",
@@ -791,16 +805,21 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
       "model": "openai/gpt-6.1-sol",
     },
     "openai/terra": {
-      "description": "Use for quick, well-scoped tasks such as small edits, straightforward lookups, and concise summaries. Uses OpenAI GPT-5.6 Terra.",
+      "description": "Use for quick, well-scoped tasks such as small edits, straightforward lookups, and concise summaries. Uses OpenAI GPT-6.1 Terra.",
       "mode": "subagent",
-      "model": "openai/gpt-5.6-terra",
+      "model": "openai/gpt-6.1-terra",
     },
     "openai/luna": {
       "description": "Use for root-cause investigation, tracing behavior across a codebase, and evaluating implementation approaches before coding. Uses OpenAI GPT-6 Luna.",
       "mode": "subagent",
       "model": "openai/gpt-6-luna",
     },
-    "azure/gpt-6-astra": {
+    "azure/deepseek": {
+      "description": "Use for general coding tasks, bug fixes, and lightweight research. Uses DeepSeek V4.1 Flash through Azure.",
+      "mode": "subagent",
+      "model": "azure/deepseek-v4.1-flash",
+    },
+    "azure/gpt-astra": {
       "description": "Use for complex feature implementation, cross-cutting refactors, and tasks requiring coordinated changes across multiple files. Uses GPT-6 Astra through Azure.",
       "mode": "subagent",
       "model": "azure/gpt-6-astra",
@@ -811,34 +830,34 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
       "model": "azure/gpt-6.1-sol",
     },
     "azure/terra": {
-      "description": "Use for quick, well-scoped tasks such as small edits, straightforward lookups, and concise summaries. Uses GPT-5.6 Terra through Azure.",
+      "description": "Use for quick, well-scoped tasks such as small edits, straightforward lookups, and concise summaries. Uses GPT-6.1 Terra through Azure.",
       "mode": "subagent",
-      "model": "azure/gpt-5.6-terra",
+      "model": "azure/gpt-6.1-terra",
     },
     "azure/luna": {
       "description": "Use for root-cause investigation, tracing behavior across a codebase, and evaluating implementation approaches before coding. Uses GPT-6 Luna through Azure.",
       "mode": "subagent",
       "model": "azure/gpt-6-luna",
     },
-    "azure/claude-fable-5-1": {
+    "azure/claude-fable": {
       "description": "Use for open-ended technical analysis, exploring alternative designs, and synthesizing findings into an actionable plan. Uses Claude Fable 5.1 through Azure.",
       "mode": "subagent",
       "model": "azure/claude-fable-5-1",
     },
-    "azure/claude-opus-5-5": {
+    "azure/claude-opus": {
       "description": "Use for difficult debugging, architectural tradeoffs, and in-depth reviews of complex changes where careful reasoning is needed. Uses Claude Opus 5.5 through Azure.",
       "mode": "subagent",
       "model": "azure/claude-opus-5-5",
     },
-    "azure/claude-sonnet-5-5": {
+    "azure/claude-sonnet": {
       "description": "Use for everyday feature implementation, bug fixes, refactoring, and code reviews for correctness and maintainability. Uses Claude Sonnet 5.5 through Azure.",
       "mode": "subagent",
       "model": "azure/claude-sonnet-5-5",
     },
-    "azure/claude-haiku-4-5": {
-      "description": "Use for lightweight codebase searches, file summaries, and simple, narrowly scoped edits with clear instructions. Uses Claude Haiku 4.5 through Azure.",
+    "azure/claude-haiku": {
+      "description": "Use for lightweight codebase searches, file summaries, and simple, narrowly scoped edits with clear instructions. Uses Claude Haiku 5.5 through Azure.",
       "mode": "subagent",
-      "model": "azure/claude-haiku-4-5",
+      "model": "azure/claude-haiku-5-5",
     },
   },
   "permission": {
