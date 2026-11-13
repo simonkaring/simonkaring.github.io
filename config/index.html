@@ -817,7 +817,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
     "azure/deepseek": {
       "description": "Use for general coding tasks, bug fixes, and lightweight research. Uses DeepSeek V4.1 Flash through Azure.",
       "mode": "subagent",
-      "model": "azure/deepseek-v4.1-flash",
+      "model": "azure/deepseek-v4.1-flash-1017",
     },
     "azure/gpt-astra": {
       "description": "Use for complex feature implementation, cross-cutting refactors, and tasks requiring coordinated changes across multiple files. Uses GPT-6 Astra through Azure.",
@@ -842,7 +842,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
     "azure/claude-fable": {
       "description": "Use for open-ended technical analysis, exploring alternative designs, and synthesizing findings into an actionable plan. Uses Claude Fable 5.1 through Azure.",
       "mode": "subagent",
-      "model": "azure/claude-fable-5-1",
+      "model": "azure/claude-fable-5-2",
     },
     "azure/claude-opus": {
       "description": "Use for difficult debugging, architectural tradeoffs, and in-depth reviews of complex changes where careful reasoning is needed. Uses Claude Opus 5.5 through Azure.",
@@ -879,7 +879,17 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
       "rm *": "deny",
       "mv *": "deny"
     }
-  }
+  },
+  "policies": [
+    { "action": "tool.use", "resource": "read:*.env", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.env.*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.env", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.env.*", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:*.env*", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.env.example", "effect": "allow" },
+    { "action": "tool.use", "resource": "edit:*.env.example", "effect": "allow" },
+    { "action": "tool.use", "resource": "shell:cat .env.example", "effect": "allow" },
+  ],
 }</code></pre>
               </div>
               <p class="config-p">
