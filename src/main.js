@@ -127,6 +127,7 @@ if (configSections.length && configNavLinks.length) {
 
   let pendingTargetId = null;
   let pendingTimeout = null;
+  let initialHashId = null;
 
   const clearPending = () => {
     pendingTargetId = null;
@@ -136,14 +137,20 @@ if (configSections.length && configNavLinks.length) {
     }
   };
 
+  const releaseInitialHash = () => {
+    initialHashId = null;
+  };
+
   ['wheel', 'touchstart'].forEach(evt => {
     window.addEventListener(evt, clearPending, { passive: true });
+    window.addEventListener(evt, releaseInitialHash, { passive: true });
   });
   window.addEventListener(
     'keydown',
     e => {
       if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', ' ', 'Home', 'End'].includes(e.key)) {
         clearPending();
+        releaseInitialHash();
       }
     },
     { passive: true }
@@ -151,6 +158,7 @@ if (configSections.length && configNavLinks.length) {
 
   if ('onscrollend' in window) {
     window.addEventListener('scrollend', () => {
+      realignToHash();
       clearPending();
       updateActive();
     });
@@ -181,8 +189,23 @@ if (configSections.length && configNavLinks.length) {
       if (target && target.classList.contains('config-section')) {
         target.classList.add('is-visible');
         setActive(target.id);
+        pendingTargetId = target.id;
+        if (pendingTimeout) clearTimeout(pendingTimeout);
+        pendingTimeout = setTimeout(() => {
+          pendingTargetId = null;
+          updateActive();
+        }, 1500);
       }
     }
+  };
+
+  // The browser's own hash scroll can land early or late (smooth scrolling, late layout shifts), so re-align.
+  const realignToHash = () => {
+    const target = initialHashId && document.getElementById(initialHashId);
+    if (target && Math.abs(target.getBoundingClientRect().top - getScrollMarginTop(target)) > 1) {
+      target.scrollIntoView({ behavior: 'instant', block: 'start' });
+    }
+    updateActive();
   };
 
   const updateActive = () => {
@@ -240,10 +263,16 @@ if (configSections.length && configNavLinks.length) {
     handleHash();
     updateActive();
   });
-  document.fonts?.ready?.then(updateActive);
+  document.fonts?.ready?.then(realignToHash);
 
   if (window.location.hash) {
     handleHash();
+    initialHashId = pendingTargetId;
+    if (initialHashId) {
+      if (document.readyState !== 'complete') window.addEventListener('load', realignToHash, { once: true });
+      [300, 800].forEach(delay => setTimeout(realignToHash, delay));
+      setTimeout(releaseInitialHash, 1500);
+    }
   } else {
     updateActive();
   }
