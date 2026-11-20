@@ -721,7 +721,6 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
       "command(git reset --hard*)",
       "command(git clean -fd*)",
       "command(git branch -D*)",
-      "command(rm -rf *)",
       "command(npm publish*)",
       "command(docker push*)",
       "read_file(**/.env*)",
@@ -795,22 +794,22 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
       "model": "opencode/deepseek-v4.1-flash-free",
     },
     "openai/gpt-astra": {
-      "description": "Use for complex feature implementation, cross-cutting refactors, and tasks requiring coordinated changes across multiple files. Uses OpenAI GPT-6 Astra.",
+      "description": "Use for complex feature implementation, cross-cutting refactors, and tasks requiring coordinated changes across multiple files. Uses OpenAI Astra.",
       "mode": "subagent",
-      "model": "openai/gpt-6-astra",
+      "model": "openai/gpt-6.2-astra",
     },
     "openai/sol": {
-      "description": "Use for focused coding tasks, bug fixes, and adding or updating tests with clear requirements. Uses OpenAI GPT-6.1 Sol.",
+      "description": "Use for focused coding tasks, bug fixes, and adding or updating tests with clear requirements. Uses OpenAI Sol.",
       "mode": "subagent",
-      "model": "openai/gpt-6.1-sol",
+      "model": "openai/gpt-6.2-sol",
     },
     "openai/terra": {
-      "description": "Use for quick, well-scoped tasks such as small edits, straightforward lookups, and concise summaries. Uses OpenAI GPT-6.1 Terra.",
+      "description": "Use for quick, well-scoped tasks such as small edits, straightforward lookups, and concise summaries. Uses OpenAI Terra.",
       "mode": "subagent",
       "model": "openai/gpt-6.1-terra",
     },
     "openai/luna": {
-      "description": "Use for root-cause investigation, tracing behavior across a codebase, and evaluating implementation approaches before coding. Uses OpenAI GPT-6 Luna.",
+      "description": "Use for root-cause investigation, tracing behavior across a codebase, and evaluating implementation approaches before coding. Uses OpenAI Luna.",
       "mode": "subagent",
       "model": "openai/gpt-6-luna",
     },
@@ -820,42 +819,42 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
       "model": "azure/deepseek-v4.1-flash-1017",
     },
     "azure/gpt-astra": {
-      "description": "Use for complex feature implementation, cross-cutting refactors, and tasks requiring coordinated changes across multiple files. Uses GPT-6 Astra through Azure.",
+      "description": "Use for complex feature implementation, cross-cutting refactors, and tasks requiring coordinated changes across multiple files. Uses Astra through Azure.",
       "mode": "subagent",
-      "model": "azure/gpt-6-astra",
+      "model": "azure/gpt-6.2-astra",
     },
     "azure/sol": {
-      "description": "Use for focused coding tasks, bug fixes, and adding or updating tests with clear requirements. Uses GPT-6.1 Sol through Azure.",
+      "description": "Use for focused coding tasks, bug fixes, and adding or updating tests with clear requirements. Uses Sol through Azure.",
       "mode": "subagent",
-      "model": "azure/gpt-6.1-sol",
+      "model": "azure/gpt-6.2-sol",
     },
     "azure/terra": {
-      "description": "Use for quick, well-scoped tasks such as small edits, straightforward lookups, and concise summaries. Uses GPT-6.1 Terra through Azure.",
+      "description": "Use for quick, well-scoped tasks such as small edits, straightforward lookups, and concise summaries. Uses Terra through Azure.",
       "mode": "subagent",
       "model": "azure/gpt-6.1-terra",
     },
     "azure/luna": {
-      "description": "Use for root-cause investigation, tracing behavior across a codebase, and evaluating implementation approaches before coding. Uses GPT-6 Luna through Azure.",
+      "description": "Use for root-cause investigation, tracing behavior across a codebase, and evaluating implementation approaches before coding. Uses Luna through Azure.",
       "mode": "subagent",
       "model": "azure/gpt-6-luna",
     },
     "azure/claude-fable": {
-      "description": "Use for open-ended technical analysis, exploring alternative designs, and synthesizing findings into an actionable plan. Uses Claude Fable 5.1 through Azure.",
+      "description": "Use for open-ended technical analysis, exploring alternative designs, and synthesizing findings into an actionable plan. Uses Claude Fable through Azure.",
       "mode": "subagent",
       "model": "azure/claude-fable-5-2",
     },
     "azure/claude-opus": {
-      "description": "Use for difficult debugging, architectural tradeoffs, and in-depth reviews of complex changes where careful reasoning is needed. Uses Claude Opus 5.5 through Azure.",
+      "description": "Use for difficult debugging, architectural tradeoffs, and in-depth reviews of complex changes where careful reasoning is needed. Uses Claude Opus through Azure.",
       "mode": "subagent",
       "model": "azure/claude-opus-5-5",
     },
     "azure/claude-sonnet": {
-      "description": "Use for everyday feature implementation, bug fixes, refactoring, and code reviews for correctness and maintainability. Uses Claude Sonnet 5.5 through Azure.",
+      "description": "Use for everyday feature implementation, bug fixes, refactoring, and code reviews for correctness and maintainability. Uses Claude Sonnet through Azure.",
       "mode": "subagent",
       "model": "azure/claude-sonnet-5-5",
     },
     "azure/claude-haiku": {
-      "description": "Use for lightweight codebase searches, file summaries, and simple, narrowly scoped edits with clear instructions. Uses Claude Haiku 5.5 through Azure.",
+      "description": "Use for lightweight codebase searches, file summaries, and simple, narrowly scoped edits with clear instructions. Uses Claude Haiku through Azure.",
       "mode": "subagent",
       "model": "azure/claude-haiku-5-5",
     },
@@ -876,8 +875,6 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
       "git reset --hard *": "deny",
       "git clean *": "deny",
       "git branch -D *": "deny",
-      "rm *": "deny",
-      "mv *": "deny"
     }
   },
   "policies": [
